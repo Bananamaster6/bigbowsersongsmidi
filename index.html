@@ -342,7 +342,82 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
 .v-item.warn{background:rgba(255,202,85,.05);border:1px solid rgba(255,202,85,.18);color:var(--warn)}
 .v-item.err{background:rgba(255,80,96,.05);border:1px solid rgba(255,80,96,.18);color:var(--err)}
 .v-item.info{background:rgba(120,160,255,.05);border:1px solid rgba(120,160,255,.18);color:#9ab8ff}
-/* ── MIDI metadata kv ── */
+/* ── Waveform oscilloscope ── */
+.osc-wrap{border-radius:8px;overflow:hidden;background:var(--bg);border:1px solid var(--b);margin-top:4px}
+.osc-wrap canvas{display:block;width:100%}
+/* ── Mini piano ── */
+.mini-piano-wrap{padding:10px 14px 8px;border-top:1px solid var(--b)}
+.mini-piano-canvas{display:block;width:100%;border-radius:6px;background:var(--bg)}
+/* ── Theme picker ── */
+.theme-row{display:flex;align-items:center;gap:5px}
+.theme-dot{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.theme-dot:hover{transform:scale(1.18)}
+.theme-dot.active{border-color:var(--t);box-shadow:0 0 0 2px rgba(255,255,255,.15)}
+/* ── Shortcuts modal ── */
+.modal-bg{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal{background:var(--s1);border:1px solid var(--b2);border-radius:16px;padding:24px;min-width:320px;max-width:500px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.modal-title{font-size:14px;font-weight:700;color:var(--t);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--m);cursor:pointer;font-size:18px;line-height:1}
+.shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b);font-size:12px}
+.shortcut-row:last-child{border:none}
+.shortcut-key{font-family:var(--mono);background:var(--s2);border:1px solid var(--b2);border-radius:5px;padding:3px 8px;font-size:11px;color:var(--a);white-space:nowrap}
+/* ── Build history ── */
+.build-hist-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:1px solid var(--b);background:rgba(255,255,255,.02);cursor:pointer;transition:all .13s;font-family:var(--mono);font-size:11px}
+.build-hist-item:hover{border-color:var(--b2);background:rgba(255,255,255,.04)}
+.build-hist-item .bhi-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--t)}
+.build-hist-item .bhi-meta{color:var(--m);flex-shrink:0;font-size:10px}
+/* ── Velocity tools ── */
+.vel-tools{display:flex;gap:5px;flex-wrap:wrap}
+.vel-btn{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;font-family:var(--mono);border:1px solid var(--b);background:rgba(255,255,255,.02);color:var(--m);cursor:pointer;transition:all .13s;white-space:nowrap}
+.vel-btn:hover{color:var(--t);border-color:var(--b2)}
+/* ── Note range quick presets ── */
+.range-presets{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
+.range-btn{padding:4px 11px;border-radius:7px;font-size:11px;font-weight:600;font-family:var(--mono);border:1px solid var(--b);background:rgba(255,255,255,.02);color:var(--m);cursor:pointer;transition:all .13s}
+.range-btn:hover{color:var(--a2);border-color:rgba(155,127,255,.3)}
+/* ── Char counter ── */
+.char-counter{font-size:10px;color:var(--m);text-align:right;margin-top:2px;font-family:var(--mono)}
+/* ── Footer ── */
+.site-footer{border-top:1px solid var(--b);margin-top:24px;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.site-footer .fl{font-family:var(--mono);font-size:10px;color:var(--m);line-height:1.8}
+.site-footer .fl a{color:var(--a);text-decoration:none}
+.site-footer .fl a:hover{text-decoration:underline}
+/* ── Tap tempo ── */
+.tap-btn{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;font-family:var(--mono);border:1px solid rgba(255,179,71,.3);background:rgba(255,179,71,.06);color:var(--a3);cursor:pointer;transition:all .13s}
+.tap-btn:hover{background:rgba(255,179,71,.12)}
+.tap-btn:active{transform:scale(.95)}
+/* ── Settings import/export ── */
+.sio-btn{padding:5px 11px;border-radius:7px;font-size:11px;font-weight:600;font-family:var(--mono);border:1px solid var(--b);background:rgba(255,255,255,.02);color:var(--m);cursor:pointer;transition:all .13s}
+.sio-btn:hover{color:var(--a2);border-color:rgba(155,127,255,.3)}
+/* ── Beat grid & roll toolbar ── */
+.roll-toolbar{display:flex;align-items:center;gap:7px;padding:5px 10px;border-bottom:1px solid var(--b);flex-wrap:wrap}
+.roll-tool-btn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;font-family:var(--mono);border:1px solid var(--b);background:transparent;color:var(--m);cursor:pointer;transition:all .13s}
+.roll-tool-btn:hover{color:var(--t);border-color:var(--b2)}
+.roll-tool-btn.on{background:rgba(61,252,190,.1);border-color:rgba(61,252,190,.3);color:var(--a)}
+/* ── Track toggles ── */
+.track-toggles{display:flex;flex-wrap:wrap;gap:5px}
+.trk-lbl{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:var(--mono);color:var(--m);cursor:pointer;padding:4px 9px;border-radius:6px;border:1px solid var(--b);transition:all .13s;user-select:none}
+.trk-lbl:hover{border-color:var(--b2);color:var(--t)}
+.trk-lbl input{width:11px;height:11px;accent-color:var(--a);cursor:pointer;flex-shrink:0}
+/* ── Note table row hover/preview ── */
+.nt tbody tr{cursor:pointer;transition:background .1s}
+.nt tbody tr:hover td{background:rgba(255,255,255,.04)}
+.nt tbody tr.note-playing td{background:rgba(61,252,190,.08)!important}
+/* ── Forum post modal content ── */
+.forum-post-area{background:var(--bg);border:1px solid var(--b);border-radius:9px;padding:13px;font-family:var(--mono);font-size:11px;color:var(--t);line-height:1.9;white-space:pre-wrap;max-height:300px;overflow-y:auto;user-select:all}
+/* ── Auto-save banner ── */
+.autosave-banner{display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(97,255,180,.05);border:1px solid rgba(97,255,180,.2);border-radius:9px;font-family:var(--mono);font-size:11px;color:var(--a)}
+.autosave-restore-btn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;border:1px solid rgba(97,255,180,.3);background:rgba(97,255,180,.1);color:var(--a);cursor:pointer;white-space:nowrap}
+/* ── Level summary after build ── */
+.level-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:7px}
+.ls-card{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:9px 12px;text-align:center}
+.ls-card .lsv{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--a);line-height:1;margin-bottom:2px}
+.ls-card .lsl{font-size:10px;color:var(--m);letter-spacing:.03em}
+/* ── Minify toggle ── */
+.minify-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;border:1px solid var(--b);background:rgba(255,255,255,.01);font-size:12px;font-weight:500}
+/* ── Budget bar ── */
+.budget-bar-wrap{height:5px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:5px}
+.budget-bar{height:100%;border-radius:3px;background:var(--a);transition:width .3s,background .3s}
+/* ── MIDI metadata ── */
 .meta-kv{display:flex;flex-direction:column;gap:4px}
 .meta-row{display:flex;gap:8px;font-family:var(--mono);font-size:11px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .meta-row:last-child{border:none}
@@ -442,6 +517,21 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
     <div class="stat-card"><div class="stat-v" id="sEvts">—</div><div class="stat-l">Note events</div></div>
     <div class="stat-card"><div class="stat-v" id="sDur">—</div><div class="stat-l">Duration (s)</div></div>
     <div class="stat-card"><div class="stat-v" id="sBpm" style="color:var(--a3)">—</div><div class="stat-l">Est. BPM</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:4px">
+      <div class="theme-row" title="Color theme">
+        <span style="font-size:10px;color:var(--m);font-family:var(--mono);letter-spacing:.05em;flex-shrink:0">THEME</span>
+        <div class="theme-dot active" data-color="#3dfcbe" style="background:#3dfcbe" title="Mint"></div>
+        <div class="theme-dot" data-color="#00d4ff" style="background:#00d4ff" title="Cyan"></div>
+        <div class="theme-dot" data-color="#b56fff" style="background:#b56fff" title="Purple"></div>
+        <div class="theme-dot" data-color="#ffc24d" style="background:#ffc24d" title="Gold"></div>
+        <div class="theme-dot" data-color="#ff6eb4" style="background:#ff6eb4" title="Pink"></div>
+      </div>
+      <div style="display:flex;gap:5px">
+        <button id="shortcutsBtn" style="flex:1;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:600;font-family:var(--mono);border:1px solid var(--b);background:rgba(255,255,255,.02);color:var(--m);cursor:pointer" title="Keyboard shortcuts">⌨ Keys</button>
+        <button id="settingsExportBtn" class="sio-btn" title="Export settings to file">⬆ Settings</button>
+        <label class="sio-btn" title="Import settings from file" style="cursor:pointer">⬇ Import<input type="file" id="settingsImportInput" accept=".m2g,.json" style="display:none"/></label>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -473,13 +563,19 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
         <div class="r2">
           <div class="field"><label>Track</label>
             <select id="trackSel"><option value="-1">All tracks</option></select></div>
+          <div id="trackTogglesWrap" style="display:none">
+            <div style="font-size:10px;color:var(--m);font-family:var(--mono);margin-bottom:5px;letter-spacing:.05em">TRACK VISIBILITY</div>
+            <div class="track-toggles" id="trackToggles"></div>
+          </div>
           <div class="field"><label>Wave</label>
             <select id="waveSel">
               <option value="1">1. Square</option>
               <option value="3" selected>2. Sawtooth</option>
               <option value="0">3. Sine</option>
               <option value="2">4. Triangle</option>
-            </select></div>
+            </select>
+            <div class="osc-wrap"><canvas id="oscCanvas" height="52"></canvas></div>
+          </div>
         </div>
 
         <!-- Checkboxes -->
@@ -550,9 +646,11 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
         <div class="expand-body" id="metaBody">
           <div class="r2">
             <div class="field"><label>Level Title</label>
-              <input type="text" id="lvlTitle" placeholder="My Awesome Track" maxlength="64"/></div>
+              <input type="text" id="lvlTitle" placeholder="My Awesome Track" maxlength="64"/>
+              <div class="char-counter" id="lvlTitleCount">0 / 64</div></div>
             <div class="field"><label>Creator Name</label>
-              <input type="text" id="lvlCreator" value="Bananamaster6" maxlength="48"/></div>
+              <input type="text" id="lvlCreator" value="Bananamaster6" maxlength="48"/>
+              <div class="char-counter" id="lvlCreatorCount">13 / 48</div></div>
           </div>
           <div class="field"><label>Description</label>
             <input type="text" id="lvlDesc" placeholder="MIDI converted by MIDI2GRAB" maxlength="120"/></div>
@@ -636,6 +734,16 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
             <div style="font-size:10px;color:var(--m);margin-top:4px">Notes outside this range are ignored. Standard piano: 21 (A0) → 108 (C8).</div>
           </div>
           <div id="noteRangeInfo" style="display:none;font-family:var(--mono);font-size:10px;color:var(--warn);padding:7px 10px;border-radius:7px;border:1px solid rgba(255,200,77,.2);background:rgba(255,200,77,.04)"></div>
+          <div class="field"><label>Quick Range Presets</label>
+            <div class="range-presets">
+              <button class="range-btn" data-min="21" data-max="108" title="A0–C8">🎹 Piano</button>
+              <button class="range-btn" data-min="40" data-max="88" title="E2–E6">🎸 Guitar</button>
+              <button class="range-btn" data-min="28" data-max="67" title="E1–G4">🎵 Bass</button>
+              <button class="range-btn" data-min="48" data-max="84" title="C3–C6">🎼 Mid</button>
+              <button class="range-btn" data-min="60" data-max="84" title="C4–C6">🎶 Treble</button>
+              <button class="range-btn" data-min="0" data-max="127" title="Full range">∞ Full</button>
+            </div>
+          </div>
         </div>
 
         <!-- ── Advanced Sound ── -->
@@ -661,6 +769,38 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
           <div class="field"><label>Low-pass Filter (Hz)</label>
             <input type="number" id="lpfFreq" value="10000" min="100" max="20000" step="100"/></div>
           <div style="font-size:10px;color:var(--m);line-height:1.6">Reverb &amp; vibrato apply to all notes. LPF cuts high frequencies — lower values give a muffled/underwater sound. These affect the GRAB sound parameters directly; instrument recreation overrides these for individual tracks.</div>
+        </div>
+
+        <!-- ── Velocity Tools ── -->
+        <div class="expand-hdr" id="velToolHdr" tabindex="0" style="border-color:rgba(255,202,85,.18);background:rgba(255,202,85,.03)">
+          <span style="font-size:15px">🎚</span>
+          <span class="exp-title" style="color:var(--a3)">Velocity Tools</span>
+          <span style="font-size:11px;color:var(--m);margin-left:4px">(normalize, compress, adjust)</span>
+          <span class="exp-icon">▼</span>
+        </div>
+        <div class="expand-body" id="velToolBody">
+          <div class="field"><label>Quick Adjustments</label>
+            <div class="vel-tools">
+              <button class="vel-btn" id="velNormBtn" title="Scale velocities so max = 1.0">⬆ Normalize</button>
+              <button class="vel-btn" id="velCompBtn" title="Reduce dynamic range — bring quiet notes up">⊡ Compress</button>
+              <button class="vel-btn" id="velBoostBtn" title="Multiply all velocities × 1.15">+15% Boost</button>
+              <button class="vel-btn" id="velCutBtn" title="Multiply all velocities × 0.85">−15% Cut</button>
+              <button class="vel-btn" id="velHumanBtn" title="Add small random variation to velocities">~ Humanize Vel</button>
+              <button class="vel-btn" id="velFlatBtn" title="Set all velocities to 0.8">= Flatten</button>
+            </div>
+          </div>
+          <div class="r2">
+            <div class="field"><label>Tap Tempo (BPM)</label>
+              <div style="display:flex;gap:6px;align-items:center">
+                <button class="tap-btn" id="tapTempoBtn">🥁 Tap</button>
+                <span id="tapBpmDisplay" style="font-family:var(--mono);font-size:13px;color:var(--a3);min-width:50px">— BPM</span>
+                <button class="vel-btn" id="tapApplyBtn" style="display:none">Apply to BPM Scale</button>
+              </div>
+            </div>
+            <div class="field"><label>Vel. Scale Display</label>
+              <div id="velHistMini" style="height:36px;border-radius:7px;overflow:hidden;background:var(--bg);border:1px solid var(--b)"><canvas id="velMiniCanvas" height="36" style="width:100%;display:block"></canvas></div>
+            </div>
+          </div>
         </div>
 
         <!-- ── MIDI Transforms ── -->
@@ -727,6 +867,21 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
             <span style="font-size:12px;font-weight:600">Reverse MIDI</span>
             <span style="font-size:10px;color:var(--m);margin-left:4px">— flip time axis so the song plays backwards</span>
           </label>
+          <div class="r3">
+            <div class="field"><label>Max Poly (0=off)</label>
+              <input type="number" id="maxPolyLimit" value="0" min="0" max="32" step="1" title="Limit simultaneous notes — keeps loudest when exceeded"/></div>
+            <div class="field"><label>Note Probability %</label>
+              <input type="number" id="noteProbability" value="100" min="1" max="100" step="5" title="Randomly keep only this % of notes"/></div>
+            <div class="field"><label>Duration Mode</label>
+              <select id="durationMode">
+                <option value="normal" selected>Normal</option>
+                <option value="staccato">Staccato (short)</option>
+                <option value="legato">Legato (fill gap)</option>
+                <option value="fixed50">Fixed 50ms</option>
+                <option value="fixed100">Fixed 100ms</option>
+                <option value="fixed250">Fixed 250ms</option>
+              </select></div>
+          </div>
           <div id="transformBadge" style="display:none;font-family:var(--mono);font-size:10px;color:var(--a);padding:6px 10px;border-radius:7px;background:rgba(61,255,180,.05);border:1px solid rgba(61,255,180,.15);line-height:1.7">Active transforms: <span id="transformList"></span></div>
         </div>
 
@@ -791,7 +946,6 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
             <button class="btn btn-s" id="savePresetBtn" style="padding:5px 11px;font-size:11px;height:32px">💾 Save</button>
           </div>
         </div>
-
         <!-- ── Complexity Estimate ── -->
         <div id="complexityPanel" style="display:none;padding:10px 13px;border-radius:10px;border:1px solid var(--b);background:rgba(255,255,255,.02)">
           <div style="font-size:11px;color:var(--m);font-weight:600;letter-spacing:.02em;margin-bottom:8px;display:flex;align-items:center;gap:8px">
@@ -818,12 +972,41 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
           <button class="btn btn-p" id="dlBtn" disabled>⬇ .json</button>
           <button class="btn btn-p" id="dlLevelBtn" disabled style="background:rgba(61,252,190,.7)">⬇ .level</button>
           <button class="btn btn-s" id="cpBtn" disabled>⎘ Copy</button>
+          <button class="btn btn-s" id="forumPostBtn" disabled title="Generate forum post text">📋 Post</button>
+        </div>
+        <label class="minify-row">
+          <input type="checkbox" id="minifyJson" style="width:14px;height:14px;accent-color:var(--a2);cursor:pointer"/>
+          <span>Minify JSON output</span>
+          <span style="font-size:10px;color:var(--m);margin-left:4px">— removes whitespace, smaller file size</span>
+        </label>
+        <div id="levelSummaryWrap" style="display:none">
+          <div style="font-size:11px;color:var(--m);font-weight:700;font-family:var(--mono);letter-spacing:.05em;margin-bottom:7px">📦 LEVEL SUMMARY</div>
+          <div class="level-summary" id="levelSummary"></div>
+          <div style="margin-top:9px">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--m);margin-bottom:3px">
+              <span>Complexity budget</span><span id="budgetText">— / 2000</span>
+            </div>
+            <div class="budget-bar-wrap"><div class="budget-bar" id="budgetBar" style="width:0%"></div></div>
+          </div>
         </div>
         <div class="status" id="expStatus">No level built yet.</div>
+        <div id="autosaveBanner" style="display:none" class="autosave-banner">
+          <span style="flex:1">💾 Auto-save recovered: <span id="autosaveTitle" style="color:var(--t)"></span></span>
+          <button class="autosave-restore-btn" id="autosaveRestoreBtn">Restore</button>
+          <button onclick="document.getElementById('autosaveBanner').style.display='none'" style="background:none;border:none;color:var(--m);cursor:pointer;font-size:14px;padding:0 4px">✕</button>
+        </div>
         <!-- ── Level Validator ── -->
         <div id="validatorPanel" style="display:none">
           <div style="font-size:11px;color:var(--m);font-weight:700;letter-spacing:.06em;margin-bottom:7px;font-family:var(--mono)">✅ LEVEL VALIDATOR</div>
           <div class="validator-list" id="validatorList"></div>
+        </div>
+        <!-- ── Build History ── -->
+        <div id="buildHistPanel" style="display:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+            <div style="font-size:11px;color:var(--m);font-weight:700;letter-spacing:.06em;font-family:var(--mono)">🕐 BUILD HISTORY</div>
+            <button id="csvExportBtn" class="vel-btn" style="font-size:10px;padding:4px 9px" title="Export current events as CSV">⬇ CSV</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px" id="buildHistList"></div>
         </div>
       </div>
     </div>
@@ -834,6 +1017,20 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
       <div class="ph-dots"><span class="da"></span><span class="db"></span><span class="dc"></span></div>
       <span class="ph-title" id="songName">piano_roll.canvas</span>
       <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--a)" id="playTime"></span>
+    </div>
+    <div class="roll-toolbar">
+      <button class="roll-tool-btn" id="beatGridBtn" title="Show estimated beat grid">♩ Beat Grid</button>
+      <button class="roll-tool-btn" id="velColorBtn" title="Color notes by velocity">🎨 Velocity</button>
+      <button class="roll-tool-btn" id="chColorBtn" title="Color notes by MIDI channel">🎵 Channel</button>
+      <div style="flex:1"></div>
+      <label style="font-size:10px;color:var(--m);font-family:var(--mono);display:flex;align-items:center;gap:5px;cursor:pointer">
+        Preview&nbsp;
+        <select id="previewSpeed" style="background:var(--s2);border:1px solid var(--b);border-radius:5px;padding:2px 5px;font-size:10px;color:var(--t);cursor:pointer">
+          <option value="0.25">0.25×</option><option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option>
+        </select>
+      </label>
+      <span style="font-size:10px;color:var(--m);font-family:var(--mono)">· click row→preview</span>
     </div>
     <div class="cv-wrap" id="cvWrap">
       <canvas id="roll" height="300"></canvas>
@@ -850,6 +1047,10 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bac
         <thead><tr><th></th><th>Note</th><th>Freq Hz</th><th>Events</th><th>Sound ID</th><th>Trigger ID</th></tr></thead>
         <tbody id="ntBody"></tbody>
       </table>
+    </div>
+    <div class="mini-piano-wrap" id="miniPianoWrap" style="display:none">
+      <canvas id="miniPianoCanvas" height="48" class="mini-piano-canvas"></canvas>
+      <div style="font-size:9px;color:var(--m);font-family:var(--mono);margin-top:3px;text-align:center" id="miniPianoLabel"></div>
     </div>
   </div>
 </div>
@@ -1762,7 +1963,7 @@ function getTransformOpts(){
 }
 
 function updateTransformBadge(){
-  const opts = getTransformOpts();
+  const opts=getTransformOpts();
   const active=[];
   if(parseFloat(opts.bpmScale)!==1) active.push(`${opts.bpmScale}× BPM`);
   if(parseFloat(opts.quantize)>0) active.push(`quantize ${opts.quantize}s`);
@@ -1773,9 +1974,15 @@ function updateTransformBadge(){
   if(parseFloat(opts.humanize)>0) active.push(`humanize ${opts.humanize}ms`);
   if(opts.pitchQuantize!=='chromatic') active.push(`scale: ${opts.pitchQuantize}`);
   if(opts.reverse) active.push('reversed');
+  const maxPoly=parseInt(document.getElementById('maxPolyLimit')?.value||0);
+  if(maxPoly>0) active.push(`poly ≤${maxPoly}`);
+  const prob=parseInt(document.getElementById('noteProbability')?.value||100);
+  if(prob<100) active.push(`${prob}% notes`);
+  const dm=document.getElementById('durationMode')?.value||'normal';
+  if(dm!=='normal') active.push(dm);
   const badge=document.getElementById('transformBadge');
   const list=document.getElementById('transformList');
-  if(badge&&list){ badge.style.display=active.length?'block':'none'; list.textContent=active.join(' · '); }
+  if(badge&&list){badge.style.display=active.length?'block':'none';list.textContent=active.join(' · ');}
 }
 
 // ═══════════════════════════════════════════════
@@ -2507,24 +2714,42 @@ window.addEventListener('resize',()=>{
     try{midi=new Midi(buf);}catch(e){ss(statusEl,'Parse error: '+e.message,'err');return;}
     trackSel.innerHTML='<option value="-1">All tracks</option>';
     midi.tracks.forEach((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`Track ${i+1}${t.name?': '+t.name:''} (${t.notes.length} notes)`;trackSel.appendChild(o);});
+    const tWrap=document.getElementById('trackTogglesWrap');
+    const tList=document.getElementById('trackToggles');
+    if(tWrap&&tList){
+      tList.innerHTML='';
+      if(midi.tracks.length>1){
+        midi.tracks.forEach((t,i)=>{
+          const lbl=document.createElement('label');lbl.className='trk-lbl';
+          const cb=document.createElement('input');cb.type='checkbox';cb.checked=true;cb.dataset.track=i;
+          cb.addEventListener('change',()=>{if(midi)processAndRender();});
+          lbl.appendChild(cb);
+          const sp=document.createElement('span');sp.textContent=` T${i+1}${t.name?' '+t.name.slice(0,12):''}`;
+          lbl.appendChild(sp);tList.appendChild(lbl);
+        });
+        tWrap.style.display='block';
+      } else { tWrap.style.display='none'; }
+    }
     songNameEl.textContent=name.replace(/\.(mid|midi)$/i,'')+'.roll';
-    // Auto-fill title from filename if field is empty or was auto-set
     const cleanName=name.replace(/\.(mid|midi)$/i,'').replace(/[_-]/g,' ');
-    if(lvlTitleEl && (!lvlTitleEl.value||lvlTitleEl.dataset.auto==='1')){
-      lvlTitleEl.value=cleanName;
-      lvlTitleEl.dataset.auto='1';
+    if(lvlTitleEl&&(!lvlTitleEl.value||lvlTitleEl.dataset.auto==='1')){
+      lvlTitleEl.value=cleanName; lvlTitleEl.dataset.auto='1';
+      const cnt=document.getElementById('lvlTitleCount'); if(cnt) cnt.textContent=`${cleanName.length} / 64`;
     }
     buildBtn.disabled=false;playBtn.disabled=false;
     ss(statusEl,`Loaded "${name}"`,'ok');processAndRender();
   }
-
-  // Stop auto-fill once user edits the title manually
-  if(lvlTitleEl) lvlTitleEl.addEventListener('input',()=>{ lvlTitleEl.dataset.auto='0'; });
+  if(lvlTitleEl) lvlTitleEl.addEventListener('input',()=>{lvlTitleEl.dataset.auto='0';});
 
   async function processAndRender(){
     if(!midi) return;
     const tidx=parseInt(trackSel.value,10);
-    const tracks=tidx===-1?midi.tracks:[midi.tracks[tidx]];
+    // Get enabled track indices from checkboxes
+    const enabledTracks=new Set();
+    document.querySelectorAll('#trackToggles input[type=checkbox]').forEach(cb=>{if(cb.checked)enabledTracks.add(+cb.dataset.track);});
+    const tracks=tidx===-1
+      ? midi.tracks.filter((_,i)=>enabledTracks.size===0||enabledTracks.has(i))
+      : [midi.tracks[tidx]];
     ss(statusEl,'Processing MIDI…','load');await sleep0();
     const raw=[];
     pitchProgram=new Map();
@@ -2553,9 +2778,33 @@ window.addEventListener('resize',()=>{
     const vs=parseFloat(velScaleEl?.value||1.0);
     if(vs!==1.0) processedRaw=processedRaw.map(ev=>({...ev,vel:Math.max(0.01,Math.min(1.0,ev.vel*vs))}));
 
+    // Apply vel post-processing (compress / humanize vel from velocity tools)
+    const vpt=window._m2g._velPostType;
+    if(vpt==='compress'){
+      const avg=processedRaw.reduce((s,e)=>s+e.vel,0)/Math.max(1,processedRaw.length);
+      processedRaw=processedRaw.map(e=>({...e,vel:Math.max(0.05,Math.min(1,avg+(e.vel-avg)*0.4))}));
+      window._m2g._velPostType=null;
+    } else if(vpt==='humanize'){
+      processedRaw=processedRaw.map(e=>({...e,vel:Math.max(0.05,Math.min(1,e.vel+(Math.random()*0.12-0.06)))}));
+      window._m2g._velPostType=null;
+    }
+
     // Apply MIDI transforms
     const transformOpts=getTransformOpts();
     processedRaw=applyMidiTransforms(processedRaw, transformOpts);
+
+    // Apply polyphony limiter
+    const maxPoly=parseInt(document.getElementById('maxPolyLimit')?.value||0);
+    if(maxPoly>0) processedRaw=limitPolyphony(processedRaw,maxPoly);
+
+    // Apply duration mode (staccato / legato / fixed)
+    const durMode=document.getElementById('durationMode')?.value||'normal';
+    if(durMode!=='normal') processedRaw=applyDurationMode(processedRaw,durMode);
+
+    // Apply note probability filter
+    const prob=parseInt(document.getElementById('noteProbability')?.value||100)/100;
+    if(prob<1) processedRaw=processedRaw.filter(()=>Math.random()<prob);
+
     updateTransformBadge();
 
     events=processedRaw;
@@ -2606,6 +2855,10 @@ window.addEventListener('resize',()=>{
     });
     drawRoll();drawPlayhead(-1);stopBtn.disabled=true;playBtn.disabled=false;
     ss(statusEl,`Ready. ${raw.length} raw → ${events.length} compacted notes. ${instrSet.size} instrument${instrSet.size!==1?'s':''} detected.${detectedKey?' Key: '+detectedKey:''}`,'ok');
+    requestAnimationFrame(()=>{
+      drawMiniPiano(pitches);
+      drawVelMini(events);
+    });
   }
 
   function getAC(){if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended') audioCtx.resume();return audioCtx;}
@@ -2684,7 +2937,9 @@ window.addEventListener('resize',()=>{
       layout, offsetX, offsetY, offsetZ, blockMaterial:blockMat, blockScale:blockSc, blockNeon
     });
     levelJson=json;
-    const s=JSON.stringify(json,null,2);
+    window._m2g._lastBuiltJson=json;
+    const minify=document.getElementById('minifyJson')?.checked;
+    const s=minify?JSON.stringify(json):JSON.stringify(json,null,2);
     codeBox.textContent=s.slice(0,8000)+(s.length>8000?'\n\n// ...truncated':'');
     const P=pitches.length;
     const {total}=calcComplexity(P,0,VC,useCS);
@@ -2696,8 +2951,12 @@ window.addEventListener('resize',()=>{
     ss(expStatusEl,`${(s.length/1024).toFixed(1)} KB · ${json.levelNodes.length} nodes · complexity ${total}`,'ok');
     dlBtn.disabled=false;cpBtn.disabled=false;
     if(dlLevelBtn) dlLevelBtn.disabled=false;
+    const forumBtn=document.getElementById('forumPostBtn'); if(forumBtn) forumBtn.disabled=false;
     updateComplexityDisplay(P,0,VC,useCS);
     runValidator(json, events, pitches);
+    pushBuildHistory(json, events);
+    renderLevelSummary(json, events, total);
+    autoSaveLevel(json);
   }
 
   function handleFile(file){
@@ -2713,7 +2972,7 @@ window.addEventListener('resize',()=>{
   playBtn.addEventListener('click',startPlay);stopBtn.addEventListener('click',stopPlay);
 
   // Re-process when note-processing or transform inputs change
-  const reprocessIds=['transposeVal','velScale','minNote','maxNote','bpmScale','quantizeGrid','loopCount','chordSpread','fadeInDur','fadeOutDur','humanize','pitchQuantize'];
+  const reprocessIds=['transposeVal','velScale','minNote','maxNote','bpmScale','quantizeGrid','loopCount','chordSpread','fadeInDur','fadeOutDur','humanize','pitchQuantize','maxPolyLimit','noteProbability','durationMode'];
   reprocessIds.forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',()=>{if(midi)processAndRender();});});
   document.getElementById('reverseCheck')?.addEventListener('change',()=>{if(midi)processAndRender();});
 
@@ -2730,7 +2989,7 @@ window.addEventListener('resize',()=>{
     if(!levelJson) return;
     const s=JSON.stringify(levelJson,null,2);
     const safeName=(levelJson.title||'midi_level').trim().replace(/[^\w\s\-]/g,'').replace(/\s+/g,'_')||'midi_level';
-    const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([s],{type:'application/json'})),download:safeName+'.level'});
+    const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([s],{type:'application/octet-stream'})),download:safeName+'.level'});
     a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
     ss(expStatusEl,'Downloaded '+safeName+'.level  ← drop this into GRAB!','ok');
   });
@@ -2756,11 +3015,36 @@ window.addEventListener('resize',()=>{
     if(events.length) updateComplexityDisplay(pitches.length,0,getVoiceCount(),complexSaverCheck.checked);
   });
 
+  // Note table click to preview pitch
+  document.getElementById('ntBody')?.addEventListener('click',e=>{
+    const row=e.target.closest('tr'); if(!row) return;
+    const noteCell=row.cells[1]; if(!noteCell) return;
+    const noteName=noteCell.querySelector('b')?.textContent||'';
+    const NOTE_NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const match=noteName.match(/^([A-G]#?)(-?\d+)$/);
+    if(match){
+      const pc=NOTE_NAMES.indexOf(match[1]);
+      const oct=parseInt(match[2])+1;
+      const midi=oct*12+pc;
+      previewNote(midi,+document.getElementById('waveSel')?.value||3,0.5);
+      document.querySelectorAll('#ntBody tr.note-playing').forEach(r=>r.classList.remove('note-playing'));
+      row.classList.add('note-playing');
+      setTimeout(()=>row.classList.remove('note-playing'),550);
+    }
+  });
+
+  // Expose redraw for beat grid / color toggle buttons
+  window._m2g._triggerRedraw=()=>{drawRoll();drawPlayhead(-1);};
+
   // Init new UI systems
   setupExpand('transformHdr','transformBody');
   setupExpand('layoutHdr','layoutBody');
+  setupExpand('velToolHdr','velToolBody');
   initLayoutMode();
   initPresets();
+
+  window._m2g._triggerReprocess=()=>{if(midi)processAndRender();};
+  document.addEventListener('restoreBuild',e=>{levelJson=e.detail;});
 
   drawRoll();drawPlayhead(-1);
 })();
@@ -3472,7 +3756,7 @@ function initComposer(){
     const rawTitle=cmpLevelJson.title||'compiled_level';
     const baseName=(rawTitle.trim().replace(/[^\w\s\-]/g,'').replace(/\s+/g,'_')||'compiled_level');
     const a=Object.assign(document.createElement('a'),{
-      href:URL.createObjectURL(new Blob([s],{type:'application/json'})),
+      href:URL.createObjectURL(new Blob([s],{type:ext==='.level'?'application/octet-stream':'application/json'})),
       download:baseName+ext
     });
     a.click();
@@ -3585,6 +3869,618 @@ function initComposer(){
     btn.textContent='📖 Tutorial';
   });
 })();
+
+// ═══════════════════════════════════════════════
+//  WAVEFORM OSCILLOSCOPE
+// ═══════════════════════════════════════════════
+function drawOscilloscope(waveType){
+  const cv=document.getElementById('oscCanvas'); if(!cv) return;
+  const w=cv.parentElement.clientWidth||240; cv.width=w; cv.style.width=w+'px';
+  const h=cv.height; const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='var(--bg)'; ctx.fillRect(0,0,w,h);
+  const mid=h/2; const amp=mid*0.72; const periods=2;
+  ctx.strokeStyle='var(--a)'; ctx.lineWidth=1.5; ctx.globalAlpha=0.9;
+  ctx.beginPath();
+  for(let px=0;px<w;px++){
+    const t=(px/w)*periods*Math.PI*2;
+    let y;
+    if(waveType===0) y=Math.sin(t)*amp;
+    else if(waveType===1) y=(Math.sin(t)>=0?1:-1)*amp;
+    else if(waveType===2) y=(2/Math.PI)*Math.asin(Math.sin(t))*amp;
+    else y=((t%(2*Math.PI))/Math.PI-1)*amp;
+    if(px===0) ctx.moveTo(px,mid-y); else ctx.lineTo(px,mid-y);
+  }
+  ctx.stroke(); ctx.globalAlpha=0.15;
+  ctx.strokeStyle='var(--a)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
+  ctx.globalAlpha=1;
+  const labels=['Sine','Square','Triangle','Sawtooth'];
+  ctx.fillStyle='rgba(120,160,120,.5)'; ctx.font='9px monospace'; ctx.textAlign='right';
+  ctx.fillText(labels[waveType]||'', w-5, h-4);
+}
+
+// ═══════════════════════════════════════════════
+//  MINI PIANO KEYBOARD
+// ═══════════════════════════════════════════════
+function drawMiniPiano(usedMidis){
+  const cv=document.getElementById('miniPianoCanvas'); if(!cv) return;
+  const wrap=document.getElementById('miniPianoWrap');
+  const label=document.getElementById('miniPianoLabel');
+  if(!usedMidis||!usedMidis.length){if(wrap) wrap.style.display='none'; return;}
+  if(wrap) wrap.style.display='block';
+  const w=cv.parentElement.clientWidth||400; cv.width=w; cv.style.width=w+'px';
+  const h=cv.height; const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  const usedSet=new Set(usedMidis);
+  const minOct=Math.max(0,Math.floor(Math.min(...usedMidis)/12)-1);
+  const maxOct=Math.min(10,Math.floor(Math.max(...usedMidis)/12)+1);
+  const octaves=maxOct-minOct+1;
+  const octW=w/octaves;
+  const WHITE=[0,2,4,5,7,9,11], BLACK=[1,3,6,8,10];
+  const blackOffsets={1:0.65,3:1.65,6:3.65,8:4.65,10:5.65};
+  for(let o=minOct;o<=maxOct;o++){
+    const ox=(o-minOct)*octW;
+    const wkW=octW/7;
+    WHITE.forEach((pc,i)=>{
+      const midi=o*12+pc;
+      const isUsed=usedSet.has(midi);
+      ctx.fillStyle=isUsed?'var(--a)':'rgba(255,255,255,.85)';
+      ctx.fillRect(ox+i*wkW+0.5,0,wkW-1.5,h);
+      ctx.strokeStyle='rgba(0,0,0,.3)'; ctx.lineWidth=0.5;
+      ctx.strokeRect(ox+i*wkW+0.5,0,wkW-1.5,h);
+    });
+    Object.entries(blackOffsets).forEach(([pc,pos])=>{
+      const midi=o*12+parseInt(pc);
+      const isUsed=usedSet.has(midi);
+      const bx=ox+pos*octW/7; const bw=octW/7*0.6; const bh=h*0.62;
+      ctx.fillStyle=isUsed?'var(--a2)':'rgba(20,20,20,.92)';
+      ctx.fillRect(bx,0,bw,bh);
+    });
+  }
+  if(label){
+    const lo=usedMidis[0], hi=usedMidis[usedMidis.length-1];
+    const nn=m=>{const n=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];return n[m%12]+(Math.floor(m/12)-1);};
+    label.textContent=`${usedMidis.length} pitches used · ${nn(lo)} – ${nn(hi)}`;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  VELOCITY MINI HISTOGRAM
+// ═══════════════════════════════════════════════
+function drawVelMini(events){
+  const cv=document.getElementById('velMiniCanvas'); if(!cv||!events.length) return;
+  const w=cv.parentElement.clientWidth||200; cv.width=w; cv.style.width=w+'px';
+  const h=cv.height; const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  const bins=new Array(20).fill(0);
+  events.forEach(e=>{const b=Math.min(19,Math.floor(e.vel*20));bins[b]++;});
+  const maxB=Math.max(...bins)||1;
+  const bw=w/20;
+  bins.forEach((c,i)=>{
+    const bh=(c/maxB)*(h-2);
+    const hue=120*(i/19);
+    ctx.fillStyle=`hsla(${hue},65%,55%,.75)`;
+    ctx.fillRect(i*bw,h-bh,bw-1,bh);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  CSV EXPORT
+// ═══════════════════════════════════════════════
+function exportCSV(){
+  const state=window._m2g; if(!state.events?.length) return;
+  const nn=m=>{const n=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];return n[m%12]+(Math.floor(m/12)-1);};
+  const rows=['midi,note_name,time_s,duration_s,velocity,velocity_midi,program_gm'];
+  state.events.forEach(e=>rows.push(`${e.midi},${nn(e.midi)},${e.time.toFixed(4)},${e.dur.toFixed(4)},${e.vel.toFixed(4)},${Math.round(e.vel*127)},${e.program||0}`));
+  const csv=rows.join('\n');
+  const name=(state.midi?.name||'midi_events').replace(/\.(mid|midi)$/i,'');
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:name+'_events.csv'});
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+
+// ═══════════════════════════════════════════════
+//  SETTINGS EXPORT / IMPORT
+// ═══════════════════════════════════════════════
+function settingsExport(){
+  const s=getCurrentSettings();
+  s._version='midi2grab_v1'; s._exported=new Date().toISOString();
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'})),download:'midi2grab_settings.m2g'});
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+function settingsImport(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const s=JSON.parse(e.target.result);
+      if(s._version||s.wave||s.spacing) applyPreset(s);
+      else alert('Not a valid .m2g settings file.');
+    }catch{ alert('Could not parse settings file.'); }
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════════════════════════════════════
+//  BUILD HISTORY
+// ═══════════════════════════════════════════════
+const _buildHistory=[];
+function pushBuildHistory(json, events){
+  const {total}=calcComplexity(
+    [...new Set(events.map(e=>e.midi))].length, 0,
+    +(document.getElementById('voiceNum')?.value||15),
+    document.getElementById('complexSaverCheck')?.checked
+  );
+  _buildHistory.unshift({title:json.title||'midi_level', time:new Date(), nodes:json.levelNodes?.length||0, complexity:total, json});
+  if(_buildHistory.length>8) _buildHistory.pop();
+  renderBuildHistory();
+}
+function renderBuildHistory(){
+  const panel=document.getElementById('buildHistPanel'); if(!panel) return;
+  const list=document.getElementById('buildHistList'); if(!list) return;
+  if(!_buildHistory.length){ panel.style.display='none'; return; }
+  panel.style.display='block'; list.innerHTML='';
+  _buildHistory.forEach((b,i)=>{
+    const d=document.createElement('div'); d.className='build-hist-item';
+    const ago=Math.round((Date.now()-b.time)/1000);
+    const agoStr=ago<60?ago+'s ago':Math.round(ago/60)+'m ago';
+    d.innerHTML=`<span style="font-size:11px;color:var(--a);min-width:18px">#${_buildHistory.length-i}</span><span class="bhi-title">${b.title}</span><span class="bhi-meta">${b.nodes} nodes · complexity ${b.complexity} · ${agoStr}</span>`;
+    d.title='Click to restore this build';
+    d.addEventListener('click',()=>{
+      const codeBox=document.getElementById('codeBox');
+      const s=JSON.stringify(b.json,null,2);
+      if(codeBox) codeBox.textContent=s.slice(0,8000)+(s.length>8000?'\n\n// ...truncated':'');
+      const expStatus=document.getElementById('expStatus');
+      if(expStatus){ expStatus.className='status ok'; expStatus.textContent=`Restored: "${b.title}" · ${b.nodes} nodes · complexity ${b.complexity}`; }
+      const dlBtn=document.getElementById('dlBtn'); const dlLevelBtn=document.getElementById('dlLevelBtn'); const cpBtn=document.getElementById('cpBtn');
+      if(dlBtn) dlBtn.disabled=false; if(dlLevelBtn) dlLevelBtn.disabled=false; if(cpBtn) cpBtn.disabled=false;
+      // Temporarily override levelJson in global scope via a custom event
+      window._m2g._restoredJson=b.json;
+      document.dispatchEvent(new CustomEvent('restoreBuild',{detail:b.json}));
+    });
+    list.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  COLOR THEME PICKER
+// ═══════════════════════════════════════════════
+function applyTheme(color){
+  document.documentElement.style.setProperty('--a', color);
+  // Derive darker ok color
+  document.querySelectorAll('.theme-dot').forEach(d=>d.classList.toggle('active',d.dataset.color===color));
+  try{ localStorage.setItem('mg_theme', color); }catch{}
+}
+(function(){
+  const saved=localStorage.getItem('mg_theme');
+  if(saved) applyTheme(saved);
+  document.querySelectorAll('.theme-dot').forEach(dot=>{
+    dot.addEventListener('click',()=>applyTheme(dot.dataset.color));
+  });
+})();
+
+// ═══════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS MODAL
+// ═══════════════════════════════════════════════
+(function(){
+  const modal=document.getElementById('shortcutsModal');
+  const btn=document.getElementById('shortcutsBtn');
+  const close=document.getElementById('shortcutsClose');
+  if(btn) btn.addEventListener('click',()=>{ if(modal) modal.style.display='flex'; });
+  if(close) close.addEventListener('click',()=>{ if(modal) modal.style.display='none'; });
+  if(modal) modal.addEventListener('click',e=>{ if(e.target===modal) modal.style.display='none'; });
+})();
+
+// ═══════════════════════════════════════════════
+//  GLOBAL KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  const tag=document.activeElement?.tagName?.toLowerCase();
+  const inInput=tag==='input'||tag==='textarea'||tag==='select';
+  const ctrl=e.ctrlKey||e.metaKey;
+
+  if(ctrl && e.key==='b'&&!inInput){ e.preventDefault(); document.getElementById('buildBtn')?.click(); }
+  if(ctrl && e.key==='p'&&!inInput){ e.preventDefault(); document.getElementById('playBtn')?.click(); }
+  if(ctrl && e.key==='s'){ e.preventDefault(); document.getElementById('dlLevelBtn')?.click(); }
+  if(ctrl && e.key==='d'){ e.preventDefault(); document.getElementById('dlBtn')?.click(); }
+  if(ctrl && e.shiftKey && e.key==='C'){ e.preventDefault(); document.getElementById('cpBtn')?.click(); }
+  if(ctrl && e.key==='h'){ e.preventDefault(); document.getElementById('tutorialToggle')?.click(); }
+  if(ctrl && e.key==='1'){ e.preventDefault(); document.querySelector('[data-tab="convert"]')?.click(); }
+  if(ctrl && e.key==='2'){ e.preventDefault(); document.querySelector('[data-tab="composer"]')?.click(); }
+  if(ctrl && e.key==='3'){ e.preventDefault(); document.querySelector('[data-tab="compiler"]')?.click(); }
+  if(ctrl && e.key==='4'){ e.preventDefault(); document.querySelector('[data-tab="analyzer"]')?.click(); }
+  if(e.key==='Escape'){
+    document.getElementById('shortcutsModal').style.display='none';
+    document.getElementById('stopBtn')?.click();
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  NOTE RANGE QUICK PRESETS
+// ═══════════════════════════════════════════════
+document.querySelectorAll('.range-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const minEl=document.getElementById('minNote');
+    const maxEl=document.getElementById('maxNote');
+    if(minEl) minEl.value=btn.dataset.min;
+    if(maxEl) maxEl.value=btn.dataset.max;
+    minEl?.dispatchEvent(new Event('change'));
+  });
+});
+
+// ═══════════════════════════════════════════════
+//  CHAR COUNTERS
+// ═══════════════════════════════════════════════
+function setupCharCounter(inputId, counterId){
+  const input=document.getElementById(inputId);
+  const counter=document.getElementById(counterId);
+  if(!input||!counter) return;
+  const max=input.maxLength||64;
+  const update=()=>{ counter.textContent=`${input.value.length} / ${max}`; };
+  input.addEventListener('input',update); update();
+}
+setupCharCounter('lvlTitle','lvlTitleCount');
+setupCharCounter('lvlCreator','lvlCreatorCount');
+
+// ═══════════════════════════════════════════════
+//  SETTINGS EXPORT / IMPORT WIRING
+// ═══════════════════════════════════════════════
+document.getElementById('settingsExportBtn')?.addEventListener('click',settingsExport);
+document.getElementById('settingsImportInput')?.addEventListener('change',e=>{
+  if(e.target.files[0]) settingsImport(e.target.files[0]);
+  e.target.value='';
+});
+
+// ═══════════════════════════════════════════════
+//  OSCILLOSCOPE INIT
+// ═══════════════════════════════════════════════
+(function(){
+  const waveSel=document.getElementById('waveSel');
+  function update(){ requestAnimationFrame(()=>drawOscilloscope(+waveSel.value)); }
+  if(waveSel){ waveSel.addEventListener('change',update); update(); }
+})();
+
+// ═══════════════════════════════════════════════
+//  VELOCITY TOOLS WIRING (uses window._m2g callback)
+// ═══════════════════════════════════════════════
+// Velocity tools are wired inside Tab 1 IIFE via window._m2g.applyVelTool
+// Here we just wire the buttons to call it
+['velNormBtn','velCompBtn','velBoostBtn','velCutBtn','velHumanBtn','velFlatBtn'].forEach((id,i)=>{
+  const types=['normalize','compress','boost','cut','humanize','flatten'];
+  document.getElementById(id)?.addEventListener('click',()=>{
+    if(window._m2g?.applyVelTool) window._m2g.applyVelTool(types[i]);
+  });
+});
+
+// CSV export button
+document.getElementById('csvExportBtn')?.addEventListener('click',exportCSV);
+
+// ═══════════════════════════════════════════════
+//  TAP TEMPO
+// ═══════════════════════════════════════════════
+(function(){
+  const btn=document.getElementById('tapTempoBtn');
+  const display=document.getElementById('tapBpmDisplay');
+  const applyBtn=document.getElementById('tapApplyBtn');
+  let taps=[]; let tapTimer=null;
+  if(!btn) return;
+  btn.addEventListener('click',()=>{
+    const now=performance.now();
+    taps.push(now);
+    if(taps.length>8) taps.shift();
+    clearTimeout(tapTimer);
+    tapTimer=setTimeout(()=>{ taps=[]; if(display) display.textContent='— BPM'; if(applyBtn) applyBtn.style.display='none'; }, 2500);
+    if(taps.length<2){ if(display) display.textContent='tap…'; return; }
+    const gaps=taps.slice(1).map((t,i)=>t-taps[i]);
+    const avg=gaps.reduce((s,g)=>s+g,0)/gaps.length;
+    const bpm=Math.round(60000/avg);
+    if(display) display.textContent=bpm+' BPM';
+    if(applyBtn){ applyBtn.style.display='inline-block'; applyBtn.dataset.bpm=bpm; }
+  });
+  if(applyBtn) applyBtn.addEventListener('click',()=>{
+    const bpm=+applyBtn.dataset.bpm; if(!bpm) return;
+    const origBpm=120; // assume 120 base
+    const scale=(bpm/origBpm).toFixed(2);
+    const sel=document.getElementById('bpmScale');
+    if(sel){ sel.value=scale; sel.dispatchEvent(new Event('change')); }
+  });
+})();
+
+// ═══════════════════════════════════════════════
+//  VELOCITY TOOLS SETUP (inside window._m2g)
+// ═══════════════════════════════════════════════
+// This sets up the applyVelTool function after Tab 1 IIFE initializes
+// It reads/writes the velScale input and triggers reprocess
+(function(){
+  const velScaleEl=document.getElementById('velScale');
+  window._m2g._velPostType=null;
+  window._m2g.applyVelTool=function(type){
+    const events=window._m2g.events;
+    if(!events||!events.length) return;
+    if(type==='normalize'){
+      const maxV=Math.max(...events.map(e=>e.vel));
+      if(maxV>0&&velScaleEl){ velScaleEl.value=(1/maxV).toFixed(3); velScaleEl.dispatchEvent(new Event('change')); }
+    } else if(type==='flatten'){
+      if(velScaleEl){ velScaleEl.value=1.0; velScaleEl.dispatchEvent(new Event('change')); }
+    } else if(type==='boost'){
+      if(velScaleEl){ velScaleEl.value=Math.min(2,(+velScaleEl.value||1)*1.15).toFixed(3); velScaleEl.dispatchEvent(new Event('change')); }
+    } else if(type==='cut'){
+      if(velScaleEl){ velScaleEl.value=Math.max(0.1,(+velScaleEl.value||1)*0.85).toFixed(3); velScaleEl.dispatchEvent(new Event('change')); }
+    } else if(type==='compress'||type==='humanize'){
+      window._m2g._velPostType=type;
+      window._m2g._triggerReprocess?.();
+    }
+    setTimeout(()=>drawVelMini(window._m2g.events||[]),200);
+  };
+})();
+
+// Draw mini piano and vel histogram when events update
+function onM2gUpdate(){
+  const s=window._m2g;
+  if(s&&s.events&&s.events.length){
+    requestAnimationFrame(()=>{
+      drawMiniPiano(s.pitches||[...new Set(s.events.map(e=>e.midi))].sort((a,b)=>a-b));
+      drawVelMini(s.events);
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  NOTE PREVIEW (Web Audio)
+// ═══════════════════════════════════════════════
+function previewNote(midi, waveType, duration){
+  duration=duration||0.6;
+  const waveMap=['sine','square','triangle','sawtooth'];
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    const osc=ac.createOscillator();
+    const gain=ac.createGain();
+    const wave=waveMap[waveType&3]||'sawtooth';
+    osc.type=wave;
+    osc.frequency.value=440*Math.pow(2,(midi-69)/12);
+    gain.gain.setValueAtTime(0.35,ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+duration*0.9);
+    osc.connect(gain);gain.connect(ac.destination);
+    osc.start();osc.stop(ac.currentTime+duration);
+    setTimeout(()=>ac.close().catch(()=>{}),(duration+0.2)*1000);
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════════
+//  POLYPHONY LIMITER
+// ═══════════════════════════════════════════════
+function limitPolyphony(events, maxPoly){
+  if(!maxPoly||maxPoly<=0) return events;
+  const sorted=[...events].sort((a,b)=>a.time-b.time);
+  const result=[];
+  for(const ev of sorted){
+    const active=result.filter(e=>e.time<=ev.time&&e.time+e.dur>ev.time);
+    if(active.length<maxPoly){ result.push(ev); }
+    else{
+      const quietest=active.reduce((q,e)=>e.vel<q.vel?e:q,active[0]);
+      if(ev.vel>quietest.vel){ result.splice(result.indexOf(quietest),1); result.push(ev); }
+    }
+  }
+  return result.sort((a,b)=>a.time-b.time);
+}
+
+// ═══════════════════════════════════════════════
+//  DURATION MODES (staccato / legato / fixed)
+// ═══════════════════════════════════════════════
+function applyDurationMode(events, mode){
+  if(!mode||mode==='normal') return events;
+  if(mode==='staccato') return events.map(e=>({...e,dur:Math.min(e.dur,0.08)}));
+  if(mode==='fixed50')  return events.map(e=>({...e,dur:0.05}));
+  if(mode==='fixed100') return events.map(e=>({...e,dur:0.10}));
+  if(mode==='fixed250') return events.map(e=>({...e,dur:0.25}));
+  if(mode==='legato'){
+    const byPitch=new Map();
+    const sorted=[...events].sort((a,b)=>a.time-b.time);
+    sorted.forEach(e=>{if(!byPitch.has(e.midi))byPitch.set(e.midi,[]);byPitch.get(e.midi).push(e);});
+    return sorted.map(ev=>{
+      const arr=byPitch.get(ev.midi); const idx=arr.indexOf(ev);
+      if(idx<arr.length-1){ const next=arr[idx+1]; return {...ev,dur:Math.max(ev.dur,next.time-ev.time-0.01)}; }
+      return ev;
+    }).sort((a,b)=>a.time-b.time);
+  }
+  return events;
+}
+
+// ═══════════════════════════════════════════════
+//  AUTO-SAVE
+// ═══════════════════════════════════════════════
+function autoSaveLevel(json){
+  try{
+    sessionStorage.setItem('mg_autosave_json',JSON.stringify(json));
+    localStorage.setItem('mg_autosave_meta',JSON.stringify({title:json.title||'',time:Date.now(),nodes:json.levelNodes?.length||0}));
+  }catch(e){}
+}
+function checkAutoSave(){
+  try{
+    const meta=JSON.parse(localStorage.getItem('mg_autosave_meta')||'null');
+    if(!meta) return;
+    const ageMin=Math.round((Date.now()-meta.time)/60000);
+    if(ageMin>120){localStorage.removeItem('mg_autosave_meta');return;}
+    const banner=document.getElementById('autosaveBanner');
+    const titleEl=document.getElementById('autosaveTitle');
+    if(banner&&titleEl){
+      titleEl.textContent=`"${meta.title||'unnamed'}" (${meta.nodes} nodes, ${ageMin<1?'just now':ageMin+'m ago'})`;
+      banner.style.display='flex';
+    }
+  }catch(e){}
+}
+function restoreAutoSave(){
+  try{
+    const s=sessionStorage.getItem('mg_autosave_json'); if(!s) return;
+    const json=JSON.parse(s);
+    const codeBox=document.getElementById('codeBox');
+    const str=JSON.stringify(json,null,2);
+    if(codeBox) codeBox.textContent=str.slice(0,8000)+(str.length>8000?'\n\n// ...truncated':'');
+    window._m2g._restoredJson=json;
+    document.dispatchEvent(new CustomEvent('restoreBuild',{detail:json}));
+    const expStatus=document.getElementById('expStatus');
+    if(expStatus){expStatus.className='status ok';expStatus.textContent=`Restored: "${json.title}" · ${json.levelNodes?.length} nodes`;}
+    ['dlBtn','dlLevelBtn','cpBtn','forumPostBtn'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=false;});
+    document.getElementById('autosaveBanner').style.display='none';
+  }catch(e){}
+}
+document.getElementById('autosaveRestoreBtn')?.addEventListener('click',restoreAutoSave);
+checkAutoSave();
+
+// ═══════════════════════════════════════════════
+//  FORUM POST GENERATOR
+// ═══════════════════════════════════════════════
+function generateForumPost(json, events){
+  if(!json) return '';
+  const NOTE_NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const pitches=[...new Set(events.map(e=>e.midi))].sort((a,b)=>a-b);
+  const key=detectKey(events)||'Unknown';
+  const dur=events.length?Math.max(...events.map(e=>e.time+e.dur)):0;
+  const useCS=document.getElementById('complexSaverCheck')?.checked||false;
+  const VC=+(document.getElementById('voiceNum')?.value||15);
+  const {total}=calcComplexity(pitches.length,0,VC,useCS);
+  const bpmEl=document.getElementById('sBpm');
+  const bpm=bpmEl?.textContent?.replace(/[^\d]/g,'')||'?';
+  const lo=NOTE_NAMES[pitches[0]%12]+(Math.floor(pitches[0]/12)-1);
+  const hi=NOTE_NAMES[pitches[pitches.length-1]%12]+(Math.floor(pitches[pitches.length-1]/12)-1);
+  const min=Math.floor(dur/60), sec=Math.round(dur%60);
+  const durStr=min>0?`${min}:${sec.toString().padStart(2,'0')}`:`${sec}s`;
+  return [
+    `🎵 ${json.title||'Untitled Level'}`,
+    `By: ${json.creators||'Bananamaster6'}`,
+    ``,
+    `📊 Level Stats`,
+    `  Duration:    ${durStr}`,
+    `  Key:         ${key}`,
+    `  Est. BPM:    ${bpm}`,
+    `  Pitches:     ${pitches.length} unique (${lo}–${hi})`,
+    `  Note events: ${events.length}`,
+    `  Complexity:  ${total} / 2000`,
+    `  GRAB nodes:  ${json.levelNodes?.length||0}`,
+    json.description?`\n📝 "${json.description}"`:``,
+    ``,
+    `Made with MIDI2GRAB by Bananamaster6`,
+    `#grab #music #level`,
+  ].filter(l=>l!==null).join('\n');
+}
+document.getElementById('forumPostBtn')?.addEventListener('click',()=>{
+  const state=window._m2g;
+  if(!state||!state.events?.length) return;
+  const json=window._m2g._restoredJson||(document.getElementById('codeBox')?.textContent?.startsWith('{')?null:null);
+  const modal=document.getElementById('forumPostModal');
+  const textEl=document.getElementById('forumPostText');
+  if(!modal||!textEl) return;
+  // Get the most recent built json - use a workaround via the expStatus content
+  const built=window._m2g._lastBuiltJson;
+  if(!built){alert('Build a level first!');return;}
+  textEl.textContent=generateForumPost(built,state.events);
+  modal.style.display='flex';
+});
+document.getElementById('forumCopyBtn')?.addEventListener('click',async()=>{
+  const t=document.getElementById('forumPostText')?.textContent||'';
+  try{await navigator.clipboard.writeText(t);document.getElementById('forumCopyBtn').textContent='✓ Copied!';}
+  catch{document.getElementById('forumPostText')?.select?.();}
+  setTimeout(()=>{const b=document.getElementById('forumCopyBtn');if(b)b.textContent='⎘ Copy to Clipboard';},2000);
+});
+
+// ═══════════════════════════════════════════════
+//  LEVEL SUMMARY CARDS (after build)
+// ═══════════════════════════════════════════════
+function renderLevelSummary(json, events, complexity){
+  const wrap=document.getElementById('levelSummaryWrap'); if(!wrap) return;
+  wrap.style.display='block';
+  const dur=events.length?Math.max(...events.map(e=>e.time+e.dur)):0;
+  const pitches=[...new Set(events.map(e=>e.midi))];
+  const pct=Math.min(100,(complexity/2000)*100);
+  const cards=[
+    {v:pitches.length,l:'Pitches'},
+    {v:json.levelNodes?.length||0,l:'GRAB Nodes'},
+    {v:complexity,l:'Complexity'},
+    {v:dur.toFixed(1)+'s',l:'Duration'},
+    {v:events.length,l:'Notes'},
+    {v:((JSON.stringify(json).length)/1024).toFixed(1)+'KB',l:'File Size'},
+  ];
+  document.getElementById('levelSummary').innerHTML=cards.map(c=>`<div class="ls-card"><div class="lsv" style="${complexity>1800?'color:var(--err)':complexity>1400?'color:var(--warn)':''}">${c.v}</div><div class="lsl">${c.l}</div></div>`).join('');
+  document.getElementById('budgetText').textContent=`${complexity} / 2000 used · ${2000-complexity} remaining`;
+  const bar=document.getElementById('budgetBar');
+  if(bar){bar.style.width=pct+'%';bar.style.background=pct>90?'var(--err)':pct>70?'var(--warn)':'var(--a)';}
+}
+
+// ═══════════════════════════════════════════════
+//  BEAT GRID STATE (read by drawRoll in Tab 1 IIFE)
+// ═══════════════════════════════════════════════
+window._m2g._beatGrid=false;
+window._m2g._velColors=false;
+window._m2g._chColors=false;
+
+document.getElementById('beatGridBtn')?.addEventListener('click',function(){
+  window._m2g._beatGrid=!window._m2g._beatGrid;
+  this.classList.toggle('on',window._m2g._beatGrid);
+  window._m2g._triggerRedraw?.();
+});
+document.getElementById('velColorBtn')?.addEventListener('click',function(){
+  window._m2g._velColors=!window._m2g._velColors;
+  this.classList.toggle('on',window._m2g._velColors);
+  window._m2g._triggerRedraw?.();
+});
+document.getElementById('chColorBtn')?.addEventListener('click',function(){
+  window._m2g._chColors=!window._m2g._chColors;
+  this.classList.toggle('on',window._m2g._chColors);
+  window._m2g._triggerRedraw?.();
+});
 </script>
+<!-- ── FORUM POST MODAL ── -->
+<div id="forumPostModal" class="modal-bg" style="display:none">
+  <div class="modal" style="max-width:560px;width:95%">
+    <div class="modal-title">
+      📋 Forum Post Generator
+      <button class="modal-close" onclick="document.getElementById('forumPostModal').style.display='none'">✕</button>
+    </div>
+    <div class="forum-post-area" id="forumPostText"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-p" id="forumCopyBtn" style="flex:1">⎘ Copy to Clipboard</button>
+      <button class="btn btn-s" onclick="document.getElementById('forumPostModal').style.display='none'">Close</button>
+    </div>
+    <div style="font-size:10px;color:var(--m);font-family:var(--mono);margin-top:8px">Paste this into the GRAB Discord #levels channel or community forum. Text is pre-selected — press Ctrl+A to select all.</div>
+  </div>
+</div>
+
+<!-- ── KEYBOARD SHORTCUTS MODAL ── -->
+<div id="shortcutsModal" class="modal-bg" style="display:none">
+  <div class="modal">
+    <div class="modal-title">
+      ⌨ Keyboard Shortcuts
+      <button class="modal-close" id="shortcutsClose">✕</button>
+    </div>
+    <div class="shortcut-row"><span>Build Level</span><span class="shortcut-key">Ctrl + B</span></div>
+    <div class="shortcut-row"><span>Preview playback</span><span class="shortcut-key">Ctrl + P</span></div>
+    <div class="shortcut-row"><span>Stop playback</span><span class="shortcut-key">Escape</span></div>
+    <div class="shortcut-row"><span>Download .level</span><span class="shortcut-key">Ctrl + S</span></div>
+    <div class="shortcut-row"><span>Download .json</span><span class="shortcut-key">Ctrl + D</span></div>
+    <div class="shortcut-row"><span>Copy JSON</span><span class="shortcut-key">Ctrl + Shift + C</span></div>
+    <div class="shortcut-row"><span>Toggle Tutorial</span><span class="shortcut-key">Ctrl + H</span></div>
+    <div class="shortcut-row"><span>Switch to Analyzer tab</span><span class="shortcut-key">Ctrl + 4</span></div>
+    <div class="shortcut-row"><span>Close this modal</span><span class="shortcut-key">Escape</span></div>
+    <div style="margin-top:14px;font-size:10px;color:var(--m);font-family:var(--mono);line-height:1.8">Shortcuts work when focus is not inside a text input or number field.</div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="fl">
+    <b style="color:var(--t)">MIDI2GRAB</b> — Convert MIDI files to GRAB VR music levels ·
+    <a href="https://grab-tools.live/editor" target="_blank">grab-tools.live</a> ·
+    <a href="https://grabvr.quest/levels" target="_blank">Level Browser</a> ·
+    <a href="https://wiki.grab-tools.live" target="_blank">GRAB Wiki</a><br>
+    Level format: <span style="color:var(--a)">formatVersion 17</span> ·
+    Targets GRAB VR (Quest/PC) ·
+    All processing runs locally in your browser — no data is uploaded
+  </div>
+  <div class="fl" style="text-align:right">
+    <span style="color:var(--a2)">midi2grab</span> by Bananamaster6<br>
+    <a href="https://discord.gg/jScgbSF" target="_blank">GRAB Discord</a> ·
+    <a href="https://github.com/Slin/GRAB-Level-Format" target="_blank">Level Format Spec</a>
+  </div>
+</footer>
+
 </body>
 </html>
