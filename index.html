@@ -1647,7 +1647,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerSources:voiceBlockIds.map(id=>({triggerSourceBasic:{type:4,objectID:id}})),
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
-        {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
+        {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:4}
       ]:[{triggerTargetSound:{objectID:info.soundId,mode:4}}]
     }};
     nodes.push(trigNode);
