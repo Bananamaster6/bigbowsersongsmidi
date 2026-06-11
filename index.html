@@ -1648,7 +1648,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:1}}]
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:4}}]
     }};
     nodes.push(trigNode);
   }
@@ -1663,8 +1663,8 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerSources:voiceBlockIds.map(id=>({triggerSourceBasic:{type:4,objectID:id}})),
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:sec.soundId,mode:3,repeat:true}},
-        {triggerTargetSound:{objectID:sec.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:1}}]
+        {triggerTargetSound:{objectID:sec.soundId,repeat:true},mode:4}
+      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:4}}]
     }};
     nodes.push(secTrigNode);
   }
@@ -1708,8 +1708,8 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       frames.push({time:songDuration+1,position:{x,y:baseY,z:CS_AWAY+bz},rotation:{x:0,y:0,z:0,w:1}});
       const tgts=useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
-        {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:1}}];
+        {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:4}
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:4}}];
       const csTrig={
         objectID:info.triggerId,
         animations:[{name:`ct_${info.name.replace('#','s')}`,speed:1,currentFrameIndex:0,frames}],
