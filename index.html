@@ -1648,7 +1648,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:1}}]
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:2}}]
     }};
     nodes.push(trigNode);
   }
@@ -1664,7 +1664,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:sec.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:sec.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:1}}]
+      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:2}}]
     }};
     nodes.push(secTrigNode);
   }
@@ -1709,7 +1709,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       const tgts=useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:1}}];
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:2}}];
       const csTrig={
         objectID:info.triggerId,
         animations:[{name:`ct_${info.name.replace('#','s')}`,speed:1,currentFrameIndex:0,frames}],
@@ -1866,31 +1866,37 @@ function buildMultiInstrumentJSON({
   const nodes = [];
 
   // ── Helper: build sound params for one (instrument, pitch) ──────────────
+  // When exact length is on, release must be 0 so notes end cleanly
+  // (the trigger's exit target stops the sound at the right time instead)
+  function applyExactLengthRelease(params){
+    if(!useExactLength) return params;
+    return {...params, envelopeRelease:0};
+  }
+
   function getSoundParams(prog, gmName, presetKey, m){
     const freq = Math.round(midiFreq(m));
     const presetBase = presetKey ? GRAB_SOUND_REF_PRESETS[presetKey] : null;
     if(presetBase){
-      return {
+      return applyExactLengthRelease({
         ...presetBase,
         volume: vol,
         frequencyBase: freq,
         frequencyLimit: presetBase.frequencyLimit || 30,
         reverbDelay: reverbDelay,
         reverbDecayFactor: reverbDecay,
-        // Let user's advanced-sound panel override preset defaults when set
         vibratoStrength: (vibratoStr > 0) ? vibratoStr : (presetBase.vibratoStrength || 0),
         vibratoSpeed:    (vibratoSpd > 0) ? vibratoSpd : (presetBase.vibratoSpeed    || 0),
         lowPassFilterFrequency: (lpfFreq < 9999) ? lpfFreq : (presetBase.lowPassFilterFrequency || 10000)
-      };
+      });
     }
     // Fall back to GM instrument map
     if(gmToParams){
       const p = gmToParams(prog, vol);
-      return { ...p, frequencyBase: freq, reverbDelay, reverbDecayFactor: reverbDecay };
+      return applyExactLengthRelease({ ...p, frequencyBase: freq, reverbDelay, reverbDecayFactor: reverbDecay });
     }
     // Last resort: default sawtooth
     const wt = Math.min(3, Math.max(0, Math.round(wave||3)));
-    return {
+    return applyExactLengthRelease({
       volume:vol, waveType:wt, envelopeAttack:atk,
       envelopeSustain:0.10, envelopeRelease:0.12, envelopePunch:0,
       frequencyBase:freq, frequencyLimit:30, frequencyRamp:0, frequencyDeltaRamp:0,
@@ -1899,7 +1905,7 @@ function buildMultiInstrumentJSON({
       repeatSpeed:0, flangerFrequency:0, flangerDepth:0,
       lowPassFilterFrequency:lpfFreq, highPassFilterFrequency:0,
       reverbDelay, reverbDecayFactor:reverbDecay
-    };
+    });
   }
 
   // ── Sound blocks ─────────────────────────────────────────────────────────
@@ -1987,7 +1993,7 @@ function buildMultiInstrumentJSON({
         const tgts = useExactLength ? [
           { triggerTargetSound: { objectID:sid, mode:3, repeat:true } },
           { triggerTargetSound: { objectID:sid, repeat:true }, mode:1 }
-        ] : [{ triggerTargetSound: { objectID:sid, mode:1 } }];
+        ] : [{ triggerTargetSound: { objectID:sid, mode:2 } }];
 
         const csTrig = {
           objectID: tid,
@@ -2025,7 +2031,7 @@ function buildMultiInstrumentJSON({
           triggerTargets: useExactLength ? [
             { triggerTargetSound: { objectID:sid, mode:3, repeat:true } },
             { triggerTargetSound: { objectID:sid, repeat:true }, mode:1 }
-          ] : [{ triggerTargetSound: { objectID:sid, mode:1 } }]
+          ] : [{ triggerTargetSound: { objectID:sid, mode:2 } }]
         }});
       });
     });
