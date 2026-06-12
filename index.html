@@ -1648,7 +1648,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:2}}]
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:3}}]
     }};
     nodes.push(trigNode);
   }
@@ -1664,7 +1664,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       triggerTargets:useExactLength?[
         {triggerTargetSound:{objectID:sec.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:sec.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:2}}]
+      ]:[{triggerTargetSound:{objectID:sec.soundId,mode:3}}]
     }};
     nodes.push(secTrigNode);
   }
@@ -1709,7 +1709,7 @@ function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, use
       const tgts=useExactLength?[
         {triggerTargetSound:{objectID:info.soundId,mode:3,repeat:true}},
         {triggerTargetSound:{objectID:info.soundId,repeat:true},mode:1}
-      ]:[{triggerTargetSound:{objectID:info.soundId,mode:2}}];
+      ]:[{triggerTargetSound:{objectID:info.soundId,mode:3}}];
       const csTrig={
         objectID:info.triggerId,
         animations:[{name:`ct_${info.name.replace('#','s')}`,speed:1,currentFrameIndex:0,frames}],
@@ -1993,7 +1993,7 @@ function buildMultiInstrumentJSON({
         const tgts = useExactLength ? [
           { triggerTargetSound: { objectID:sid, mode:3, repeat:true } },
           { triggerTargetSound: { objectID:sid, repeat:true }, mode:1 }
-        ] : [{ triggerTargetSound: { objectID:sid, mode:2 } }];
+        ] : [{ triggerTargetSound: { objectID:sid, mode:3 } }];
 
         const csTrig = {
           objectID: tid,
@@ -2031,7 +2031,7 @@ function buildMultiInstrumentJSON({
           triggerTargets: useExactLength ? [
             { triggerTargetSound: { objectID:sid, mode:3, repeat:true } },
             { triggerTargetSound: { objectID:sid, repeat:true }, mode:1 }
-          ] : [{ triggerTargetSound: { objectID:sid, mode:2 } }]
+          ] : [{ triggerTargetSound: { objectID:sid, mode:3 } }]
         }});
       });
     });
