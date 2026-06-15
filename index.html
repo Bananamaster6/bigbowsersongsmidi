@@ -1594,54 +1594,108 @@ function mergePitchIntervals(list, gap=0.02){
 //  frequencyBase is always overridden with the note's actual pitch.
 // ═══════════════════════════════════════════════
 const GRAB_SOUND_REF_PRESETS = {
-  // ── Pitched melodic ──────────────────────────────────────────────────────
-  piano:        {waveType:2, envelopeSustain:0.03, envelopeRelease:0.55, envelopePunch:1.5,  frequencyLimit:35, frequencyRamp:-0.018, vibratoStrength:0.04, vibratoSpeed:400,  pitchJumpMod:0.1, dutyCycle:0.48, dutyCycleRamp:-0.0005, flangerFrequency:11.5, flangerDepth:0.03, lowPassFilterFrequency:9500},
-  epiano:       {waveType:2, envelopeSustain:0.08, envelopeRelease:0.7,  envelopePunch:0.8,  frequencyLimit:35, frequencyRamp:-0.01,  vibratoStrength:0.02, vibratoSpeed:250,  pitchJumpMod:0.05,dutyCycle:0.50, flangerFrequency:8.0,  flangerDepth:0.02,  lowPassFilterFrequency:11000},
-  harpsichord:  {waveType:3, envelopeSustain:0.01, envelopeRelease:0.25, envelopePunch:3.0,  frequencyLimit:35, frequencyRamp:-0.03,  pitchJumpMod:0.2,     dutyCycle:0.45, lowPassFilterFrequency:14000},
-  bass:         {waveType:2, envelopeSustain:0.15, envelopeRelease:0.20, envelopePunch:2.0,  frequencyLimit:25, frequencyRamp:-0.008, pitchJumpMod:0.3,     dutyCycle:0.50, lowPassFilterFrequency:6000},
-  synth_bass:   {waveType:3, envelopeSustain:0.20, envelopeRelease:0.15, envelopePunch:3.0,  frequencyLimit:25, dutyCycle:0.48, dutyCycleRamp:-0.001, lowPassFilterFrequency:5500},
-  organ:        {waveType:1, envelopeSustain:0.9,  envelopeRelease:0.05, envelopePunch:0.4,  frequencyLimit:35, vibratoStrength:0.06, vibratoSpeed:360,     dutyCycle:0.5,  lowPassFilterFrequency:18000},
-  guitar:       {waveType:2, envelopeSustain:0.03, envelopeRelease:0.38, envelopePunch:3.0,  frequencyLimit:35, frequencyRamp:-0.03,  pitchJumpMod:0.18,    dutyCycle:0.50, lowPassFilterFrequency:11000},
-  guitar_dist:  {waveType:3, envelopeSustain:0.30, envelopeRelease:0.3,  envelopePunch:1.5,  frequencyLimit:35, dutyCycle:0.40, dutyCycleRamp:-0.0003,    lowPassFilterFrequency:8000, flangerFrequency:5.0, flangerDepth:0.015},
-  strings:      {waveType:2, envelopeAttack:0.18,  envelopeSustain:0.85, envelopeRelease:0.75, frequencyLimit:35, vibratoStrength:0.13, vibratoSpeed:150,  dutyCycle:0.5,  lowPassFilterFrequency:13000},
-  pizzicato:    {waveType:2, envelopeSustain:0.02, envelopeRelease:0.35, envelopePunch:1.8,  frequencyLimit:35, frequencyRamp:-0.015, dutyCycle:0.50, lowPassFilterFrequency:11000},
-  harp:         {waveType:2, envelopeSustain:0.05, envelopeRelease:0.8,  envelopePunch:1.2,  frequencyLimit:35, frequencyRamp:-0.01,  dutyCycle:0.50, lowPassFilterFrequency:14000},
-  choir:        {waveType:1, envelopeAttack:0.30,  envelopeSustain:0.9,  envelopeRelease:0.6,  frequencyLimit:35, vibratoStrength:0.08, vibratoSpeed:190,  dutyCycle:0.5,  lowPassFilterFrequency:9000},
-  brass:        {waveType:3, envelopeAttack:0.05,  envelopeSustain:0.7,  envelopeRelease:0.35, envelopePunch:1.2, frequencyLimit:35, vibratoStrength:0.05, vibratoSpeed:280, dutyCycle:0.5, lowPassFilterFrequency:15000},
-  muted_brass:  {waveType:3, envelopeAttack:0.03,  envelopeSustain:0.6,  envelopeRelease:0.08, envelopePunch:0.8, frequencyLimit:35, dutyCycle:0.42, lowPassFilterFrequency:7000},
-  saxophone:    {waveType:3, envelopeSustain:0.70, envelopeRelease:0.15, envelopePunch:0.6,  frequencyLimit:35, vibratoStrength:0.08, vibratoSpeed:300, dutyCycle:0.44, dutyCycleRamp:-0.0002, lowPassFilterFrequency:9000},
-  reed:         {waveType:2, envelopeSustain:0.65, envelopeRelease:0.20, envelopePunch:0.5,  frequencyLimit:35, vibratoStrength:0.06, vibratoSpeed:320, dutyCycle:0.47, lowPassFilterFrequency:9500},
-  flute:        {waveType:1, envelopeAttack:0.12,  envelopeSustain:0.75, envelopeRelease:0.25, frequencyLimit:35, vibratoStrength:0.09, vibratoSpeed:420, dutyCycle:0.5, lowPassFilterFrequency:18000},
-  whistle:      {waveType:1, envelopeAttack:0.06,  envelopeSustain:0.80, envelopeRelease:0.18, frequencyLimit:35, vibratoStrength:0.11, vibratoSpeed:380, dutyCycle:0.5, lowPassFilterFrequency:22000},
-  bell:         {waveType:2, envelopeRelease:1.8,  envelopePunch:6.0,    frequencyLimit:35, vibratoStrength:0.04, vibratoSpeed:162, dutyCycle:0.5, lowPassFilterFrequency:22000},
-  marimba:      {waveType:2, envelopeRelease:0.65, envelopePunch:4.0,    frequencyLimit:35, frequencyRamp:-0.012, dutyCycle:0.5, lowPassFilterFrequency:14000},
-  timpani:      {waveType:2, envelopeRelease:0.8,  envelopePunch:5.0,    frequencyLimit:35, frequencyRamp:-0.035, dutyCycle:0.5, lowPassFilterFrequency:5000, flangerFrequency:3.0, flangerDepth:0.04},
-  // ── Synth leads / pads ──────────────────────────────────────────────────
-  synth_lead:   {waveType:3, envelopeSustain:0.85, envelopeRelease:0.08, envelopePunch:0.3,  frequencyLimit:35, dutyCycle:0.42, dutyCycleRamp:-0.0003, lowPassFilterFrequency:12000},
-  synth_saw:    {waveType:3, envelopeSustain:0.80, envelopeRelease:0.10, envelopePunch:0.5,  frequencyLimit:35, frequencyRamp:0.003, dutyCycle:0.5, lowPassFilterFrequency:9000},
-  synth_square: {waveType:1, envelopeSustain:0.85, envelopeRelease:0.10, frequencyLimit:35, dutyCycle:0.48, dutyCycleRamp:-0.0002, lowPassFilterFrequency:15000},
-  synth_sine:   {waveType:0, envelopeSustain:1.0,  envelopeRelease:0.15, frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:25000},
-  pad:          {waveType:2, envelopeAttack:0.45,  envelopeSustain:1.0,  envelopeRelease:0.8, frequencyLimit:35, vibratoStrength:0.04, vibratoSpeed:175, dutyCycle:0.5, lowPassFilterFrequency:9500},
-  pad_metallic: {waveType:3, envelopeAttack:0.30,  envelopeSustain:0.9,  envelopeRelease:0.7, frequencyLimit:35, dutyCycle:0.45, flangerFrequency:6.0, flangerDepth:0.02, lowPassFilterFrequency:10000},
-  pad_sweep:    {waveType:2, envelopeAttack:0.80,  envelopeSustain:1.0,  envelopeRelease:1.2, frequencyLimit:35, vibratoStrength:0.05, vibratoSpeed:140, dutyCycle:0.5, lowPassFilterFrequency:7000},
-  fx_crystal:   {waveType:2, envelopeSustain:0.3,  envelopeRelease:1.2,  envelopePunch:2.0,  frequencyLimit:35, vibratoStrength:0.06, vibratoSpeed:600, dutyCycle:0.5, lowPassFilterFrequency:20000},
+  // GRAB waveTypes: 0=Square  1=Sawtooth  2=Triangle  3=Noise
+  // ── Piano / keyboard ─────────────────────────────────────────────────────
+  // Triangle (2) filtered heavily = clean, warm piano-like tone (matches reference)
+  piano:      {waveType:2, envelopeSustain:0.03, envelopeRelease:0.55, envelopePunch:1.5,
+               frequencyLimit:35, frequencyRamp:-0.018, vibratoStrength:0.04, vibratoSpeed:400,
+               pitchJumpMod:0.1, dutyCycle:0.48, dutyCycleRamp:-0.0005,
+               flangerFrequency:11.5, flangerDepth:0.03, lowPassFilterFrequency:9500},
+
+  // ── Organ ────────────────────────────────────────────────────────────────
+  // Square (0) = classic Hammond-style tone with full sustain
+  organ:      {waveType:0, envelopeSustain:0.9,  envelopeRelease:0.05, envelopePunch:0.0,
+               frequencyLimit:35, vibratoStrength:0.06, vibratoSpeed:360,
+               dutyCycle:0.5, lowPassFilterFrequency:14000},
+
+  // ── Guitar / plucked ─────────────────────────────────────────────────────
+  // Triangle (2) with fast decay + pitch ramp = plucked string character
+  guitar:     {waveType:2, envelopeSustain:0.03, envelopeRelease:0.40, envelopePunch:2.5,
+               frequencyLimit:35, frequencyRamp:-0.025, pitchJumpMod:0.15,
+               dutyCycle:0.50, lowPassFilterFrequency:11000},
+
+  // ── Bass ─────────────────────────────────────────────────────────────────
+  // Sawtooth (1) with heavy LPF = warm round bass
+  bass:       {waveType:1, envelopeSustain:0.18, envelopeRelease:0.22, envelopePunch:1.8,
+               frequencyLimit:25, frequencyRamp:-0.006, dutyCycle:0.50,
+               lowPassFilterFrequency:5000},
+
+  // ── Strings / bowed ──────────────────────────────────────────────────────
+  // Triangle (2) + slow attack + vibrato = bowed string character
+  strings:    {waveType:2, envelopeAttack:0.18, envelopeSustain:0.85, envelopeRelease:0.75,
+               frequencyLimit:35, vibratoStrength:0.13, vibratoSpeed:150,
+               dutyCycle:0.5, lowPassFilterFrequency:13000},
+
+  // ── Choir / voice ────────────────────────────────────────────────────────
+  // Triangle (2) + slow attack + gentle vibrato = vocal warmth
+  choir:      {waveType:2, envelopeAttack:0.30, envelopeSustain:0.90, envelopeRelease:0.60,
+               frequencyLimit:35, vibratoStrength:0.08, vibratoSpeed:190,
+               dutyCycle:0.5, lowPassFilterFrequency:9000},
+
+  // ── Brass ────────────────────────────────────────────────────────────────
+  // Sawtooth (1) = rich harmonics, bright & punchy like trumpet/horn
+  brass:      {waveType:1, envelopeAttack:0.05, envelopeSustain:0.70, envelopeRelease:0.35,
+               envelopePunch:1.2, frequencyLimit:35, vibratoStrength:0.05, vibratoSpeed:280,
+               dutyCycle:0.5, lowPassFilterFrequency:13000},
+
+  // ── Woodwind / Reed ──────────────────────────────────────────────────────
+  // Sawtooth (1) with stronger LPF = reedy buzzy sax/clarinet character
+  woodwind:   {waveType:1, envelopeSustain:0.70, envelopeRelease:0.18, envelopePunch:0.5,
+               frequencyLimit:35, vibratoStrength:0.07, vibratoSpeed:310,
+               dutyCycle:0.46, dutyCycleRamp:-0.0001, lowPassFilterFrequency:8500},
+
+  // ── Flute / pipe ─────────────────────────────────────────────────────────
+  // Triangle (2) + slow attack + quick vibrato = breathy pipe tone
+  flute:      {waveType:2, envelopeAttack:0.10, envelopeSustain:0.78, envelopeRelease:0.22,
+               frequencyLimit:35, vibratoStrength:0.10, vibratoSpeed:420,
+               dutyCycle:0.5, lowPassFilterFrequency:18000},
+
+  // ── Bell / Mallet ────────────────────────────────────────────────────────
+  // Square (0) = bright, metallic bell character; punch for hard hit transient
+  bell:       {waveType:0, envelopeRelease:1.60, envelopePunch:5.0,
+               frequencyLimit:35, frequencyRamp:-0.010, vibratoStrength:0.04, vibratoSpeed:162,
+               dutyCycle:0.5, lowPassFilterFrequency:18000},
+
+  // ── Synth lead ───────────────────────────────────────────────────────────
+  // Sawtooth (1) = bright synth lead; duty cycle mod for character
+  synth_lead: {waveType:1, envelopeSustain:0.85, envelopeRelease:0.10, envelopePunch:0.4,
+               frequencyLimit:35, dutyCycle:0.44, dutyCycleRamp:-0.0002,
+               lowPassFilterFrequency:10000},
+
+  // ── Pad ──────────────────────────────────────────────────────────────────
+  // Triangle (2) + very slow attack + long release = ambient wash
+  pad:        {waveType:2, envelopeAttack:0.50, envelopeSustain:1.0,  envelopeRelease:0.90,
+               frequencyLimit:35, vibratoStrength:0.04, vibratoSpeed:170,
+               dutyCycle:0.5, lowPassFilterFrequency:9000},
+
   // ── Drums / percussion ───────────────────────────────────────────────────
-  // waveType 3 = noise. Noise drums: quieter (drumVolumeScale<1), punchier, shorter.
-  drum_kick:    {waveType:2, envelopeRelease:0.12, envelopePunch:10,    frequencyLimit:35, flangerFrequency:64.3, flangerDepth:0.49, lowPassFilterFrequency:200,  highPassFilterFrequency:20, drumVolumeScale:1.0},
-  drum_snare:   {waveType:3, envelopeSustain:0.01, envelopeRelease:0.15, envelopePunch:10, frequencyLimit:35, flangerFrequency:64.3, flangerDepth:0.49, lowPassFilterFrequency:220,  highPassFilterFrequency:25, drumVolumeScale:0.72},
-  drum_tom:     {waveType:2, envelopeRelease:0.22, envelopePunch:8.0,   frequencyLimit:35, flangerFrequency:20.0, flangerDepth:0.30, lowPassFilterFrequency:400,  highPassFilterFrequency:20, drumVolumeScale:1.0},
-  hihat_open:   {waveType:3, envelopeSustain:0.01, envelopeRelease:0.18, envelopePunch:8,  frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:10000, drumVolumeScale:0.65},
-  hihat_closed: {waveType:3, envelopeSustain:0.005,envelopeRelease:0.10, envelopePunch:8,  frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:25000, drumVolumeScale:0.60},
-  crash:        {waveType:3, envelopeSustain:0.02, envelopeRelease:0.55, envelopePunch:10, frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:18000, drumVolumeScale:0.70},
-  ride:         {waveType:3, envelopeSustain:0.01, envelopeRelease:0.22, envelopePunch:6,  frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:28000, drumVolumeScale:0.68},
-  cowbell:      {waveType:2, envelopeRelease:0.25, envelopePunch:10,    frequencyLimit:35, vibratoStrength:0.12, vibratoSpeed:162, dutyCycle:0.5, lowPassFilterFrequency:25000, drumVolumeScale:0.85},
-  tick:         {waveType:3, envelopeSustain:0.005,envelopeRelease:0.06, envelopePunch:6,  frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:100000, drumVolumeScale:0.60},
-  // ── Legacy aliases ───────────────────────────────────────────────────────
-  hit:          {waveType:3, envelopeRelease:0.8,  envelopePunch:2.0,    frequencyLimit:35, pitchJumpMod:1, dutyCycle:0.5, lowPassFilterFrequency:100000},
-  rise:         {waveType:3, envelopeAttack:2.5,   envelopeSustain:0.4,  frequencyLimit:35, pitchJumpMod:1, dutyCycle:0.5, lowPassFilterFrequency:100000},
-  fall:         {waveType:3, envelopeSustain:0.6,  envelopeRelease:2.5,  frequencyLimit:35, pitchJumpMod:1, dutyCycle:0.5, lowPassFilterFrequency:25000},
-  vibrato:      {waveType:2, envelopeRelease:1.5,  envelopePunch:1.2,    frequencyLimit:35, vibratoStrength:0.12, vibratoSpeed:161.7, pitchJumpMod:1, dutyCycle:0.5, lowPassFilterFrequency:25000},
-  triangle_pad: {waveType:2, envelopeSustain:1.0,  envelopeRelease:0.5,  frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:20000}
+  // Kicks: Triangle (2) with heavy LPF + flanger for boom
+  drum_kick:    {waveType:2, envelopeRelease:0.12, envelopePunch:10,
+                 frequencyLimit:35, flangerFrequency:64.3, flangerDepth:0.49,
+                 lowPassFilterFrequency:200, highPassFilterFrequency:20, drumVolumeScale:1.0},
+  // Snare: Noise (3) — very short, punchy
+  drum_snare:   {waveType:3, envelopeSustain:0.01, envelopeRelease:0.15, envelopePunch:10,
+                 frequencyLimit:35, flangerFrequency:64.3, flangerDepth:0.49,
+                 lowPassFilterFrequency:220, highPassFilterFrequency:25, drumVolumeScale:0.72},
+  // Tom: Triangle (2) with mid LPF
+  drum_tom:     {waveType:2, envelopeRelease:0.22, envelopePunch:8.0,
+                 frequencyLimit:35, flangerFrequency:20.0, flangerDepth:0.30,
+                 lowPassFilterFrequency:400, highPassFilterFrequency:20, drumVolumeScale:1.0},
+  // Hi-hats: Noise (3), tight
+  hihat_closed: {waveType:3, envelopeSustain:0.005,envelopeRelease:0.10, envelopePunch:8,
+                 frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:25000, drumVolumeScale:0.60},
+  hihat_open:   {waveType:3, envelopeSustain:0.01, envelopeRelease:0.18, envelopePunch:8,
+                 frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:10000, drumVolumeScale:0.65},
+  // Cymbals: Noise (3)
+  crash:        {waveType:3, envelopeSustain:0.02, envelopeRelease:0.55, envelopePunch:10,
+                 frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:18000, drumVolumeScale:0.70},
+  ride:         {waveType:3, envelopeSustain:0.01, envelopeRelease:0.22, envelopePunch:6,
+                 frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:28000, drumVolumeScale:0.68},
+  cowbell:      {waveType:2, envelopeRelease:0.25, envelopePunch:10,
+                 frequencyLimit:35, vibratoStrength:0.12, vibratoSpeed:162,
+                 dutyCycle:0.5, lowPassFilterFrequency:25000, drumVolumeScale:0.85},
+  tick:         {waveType:3, envelopeSustain:0.005,envelopeRelease:0.06, envelopePunch:6,
+                 frequencyLimit:35, dutyCycle:0.5, lowPassFilterFrequency:100000, drumVolumeScale:0.60}
 };
 
 const GM_NAMES_GLOBAL=['Acoustic Grand Piano','Bright Acoustic Piano','Electric Grand Piano','Honky-tonk Piano','Electric Piano 1','Electric Piano 2','Harpsichord','Clavi','Celesta','Glockenspiel','Music Box','Vibraphone','Marimba','Xylophone','Tubular Bells','Dulcimer','Drawbar Organ','Percussive Organ','Rock Organ','Church Organ','Reed Organ','Accordion','Harmonica','Tango Accordion','Nylon String Guitar','Steel String Guitar','Electric Jazz Guitar','Electric Clean Guitar','Electric Muted Guitar','Overdriven Guitar','Distortion Guitar','Guitar Harmonics','Acoustic Bass','Electric Bass (finger)','Electric Bass (pick)','Fretless Bass','Slap Bass 1','Slap Bass 2','Synth Bass 1','Synth Bass 2','Violin','Viola','Cello','Contrabass','Tremolo Strings','Pizzicato Strings','Orchestral Harp','Timpani','String Ensemble 1','String Ensemble 2','Synth Strings 1','Synth Strings 2','Choir Aahs','Voice Oohs','Synth Voice','Orchestra Hit','Trumpet','Trombone','Tuba','Muted Trumpet','French Horn','Brass Section','Synth Brass 1','Synth Brass 2','Soprano Sax','Alto Sax','Tenor Sax','Baritone Sax','Oboe','English Horn','Bassoon','Clarinet','Piccolo','Flute','Recorder','Pan Flute','Blown Bottle','Shakuhachi','Whistle','Ocarina','Lead 1 (square)','Lead 2 (sawtooth)','Lead 3 (calliope)','Lead 4 (chiff)','Lead 5 (charang)','Lead 6 (voice)','Lead 7 (fifths)','Lead 8 (bass+lead)','Pad 1 (new age)','Pad 2 (warm)','Pad 3 (polysynth)','Pad 4 (choir)','Pad 5 (bowed)','Pad 6 (metallic)','Pad 7 (halo)','Pad 8 (sweep)','FX 1 (rain)','FX 2 (soundtrack)','FX 3 (crystal)','FX 4 (atmosphere)','FX 5 (brightness)','FX 6 (goblins)','FX 7 (echoes)','FX 8 (sci-fi)','Sitar','Banjo','Shamisen','Koto','Kalimba','Bagpipe','Fiddle','Shanai','Tinkle Bell','Agogo','Steel Drums','Woodblock','Taiko Drum','Melodic Tom','Synth Drum','Reverse Cymbal','Guitar Fret Noise','Breath Noise','Seashore','Bird Tweet','Telephone Ring','Helicopter','Applause','Gunshot'];
@@ -1696,132 +1750,87 @@ function canonicalizeDrumNote(midiNote){
 }
 
 /**
- * Map a GM instrument (name + program number) to a GRAB preset key.
- * isDrum=true forces drum-preset mapping regardless of program.
+ * Map a GM instrument to one of 12 GRAB preset keys.
+ * Consolidating to 12 presets means more instruments share layers → less complexity.
+ *   piano · organ · guitar · bass · strings · choir
+ *   brass · woodwind · flute · bell · synth_lead · pad
+ *   (+ drum_kit handled separately per-note)
  */
 function matchPresetForGM(gmName, gmProgram, isDrum){
-  if(isDrum) return 'drum_kit'; // handled per-note in getSoundParams
-  const nl=(gmName||'').toLowerCase();
-  const p=Math.max(0,Math.min(127,gmProgram||0));
+  if(isDrum) return 'drum_kit';
+  const p = Math.max(0, Math.min(127, gmProgram||0));
 
-  // ── Keyboard / Pitched percussion ────────────────────────────────────
-  if(p===0||nl.includes('acoustic grand piano')) return 'piano';
-  if(p===1||nl.includes('bright acoustic piano')) return 'piano';
-  if(p===2||nl.includes('electric grand')) return 'epiano';
-  if(p===3||nl.includes('honky')) return 'harpsichord';
-  if(p===4||nl.includes('electric piano 1')) return 'epiano';
-  if(p===5||nl.includes('electric piano 2')) return 'epiano';
-  if(p===6||nl.includes('harpsichord')) return 'harpsichord';
-  if(p===7||nl.includes('clavi')) return 'harpsichord';
-  if(p===8||nl.includes('celesta')) return 'bell';
-  if(p===9||nl.includes('glocken')) return 'bell';
-  if(p===10||nl.includes('music box')) return 'bell';
-  if(p===11||nl.includes('vibraphone')) return 'bell';
-  if(p===12||nl.includes('marimba')) return 'marimba';
-  if(p===13||nl.includes('xylophone')) return 'marimba';
-  if(p===14||nl.includes('tubular bell')) return 'bell';
-  if(p===15||nl.includes('dulcimer')) return 'marimba';
-  // ── Organ ────────────────────────────────────────────────────────────
-  if(p>=16&&p<=23) return 'organ';
-  // ── Guitar ───────────────────────────────────────────────────────────
-  if(p===24||nl.includes('nylon')) return 'guitar';
-  if(p===25||nl.includes('steel string')) return 'guitar';
-  if(p===26||nl.includes('jazz guitar')) return 'guitar';
-  if(p===27||nl.includes('clean guitar')) return 'guitar';
-  if(p===28||nl.includes('muted guitar')) return 'guitar';
-  if(p===29||nl.includes('overdriven')) return 'guitar_dist';
-  if(p===30||nl.includes('distortion guitar')) return 'guitar_dist';
-  if(p===31||nl.includes('harmonics')) return 'bell';
-  // ── Bass ─────────────────────────────────────────────────────────────
-  if((p>=32&&p<=35)||nl.includes('acoustic bass')||nl.includes('electric bass (finger)')||nl.includes('electric bass (pick)')||nl.includes('fretless bass')) return 'bass';
-  if((p>=36&&p<=39)||nl.includes('slap bass')||nl.includes('synth bass')) return 'synth_bass';
-  // ── Strings ──────────────────────────────────────────────────────────
-  if(p===40||nl.includes('violin')) return 'strings';
-  if(p===41||nl.includes('viola')) return 'strings';
-  if(p===42||nl.includes('cello')) return 'strings';
-  if(p===43||nl.includes('contrabass')) return 'strings';
-  if(p===44||nl.includes('tremolo strings')) return 'vibrato';
-  if(p===45||nl.includes('pizzicato')) return 'pizzicato';
-  if(p===46||nl.includes('orchestral harp')) return 'harp';
-  if(p===47||nl.includes('timpani')) return 'timpani';
-  if(p===48||p===49||nl.includes('string ensemble')) return 'strings';
-  if(p===50||p===51||nl.includes('synth strings')) return 'pad';
-  // ── Choir / Voice ────────────────────────────────────────────────────
-  if(p>=52&&p<=55) return 'choir';
-  // ── Brass ────────────────────────────────────────────────────────────
-  if(p===56||nl.includes('trumpet')) return 'brass';
-  if(p===57||nl.includes('trombone')) return 'brass';
-  if(p===58||nl.includes('tuba')) return 'brass';
-  if(p===59||nl.includes('muted trumpet')) return 'muted_brass';
-  if(p===60||nl.includes('french horn')) return 'brass';
-  if(p===61||nl.includes('brass section')) return 'brass';
-  if(p===62||p===63||nl.includes('synth brass')) return 'synth_lead';
-  // ── Reed / Woodwind ──────────────────────────────────────────────────
-  if(p===64||nl.includes('soprano sax')) return 'saxophone';
-  if(p===65||nl.includes('alto sax')) return 'saxophone';
-  if(p===66||nl.includes('tenor sax')) return 'saxophone';
-  if(p===67||nl.includes('baritone sax')) return 'saxophone';
-  if(p===68||nl.includes('oboe')) return 'reed';
-  if(p===69||nl.includes('english horn')) return 'reed';
-  if(p===70||nl.includes('bassoon')) return 'reed';
-  if(p===71||nl.includes('clarinet')) return 'reed';
-  // ── Pipe / Flute ─────────────────────────────────────────────────────
-  if(p===72||nl.includes('piccolo')) return 'whistle';
-  if(p===73||nl.includes('flute')) return 'flute';
-  if(p===74||nl.includes('recorder')) return 'flute';
-  if(p===75||nl.includes('pan flute')) return 'whistle';
-  if(p===76||nl.includes('blown bottle')) return 'whistle';
-  if(p===77||nl.includes('shakuhachi')) return 'whistle';
-  if(p===78||nl.includes('whistle')) return 'whistle';
-  if(p===79||nl.includes('ocarina')) return 'whistle';
-  // ── Synth leads ──────────────────────────────────────────────────────
-  if(p===80) return 'synth_lead';   // square
-  if(p===81) return 'synth_saw';    // sawtooth
-  if(p===82) return 'synth_lead';   // calliope
-  if(p===83) return 'synth_lead';   // chiff
-  if(p===84) return 'guitar_dist';  // charang
-  if(p===85) return 'choir';        // voice lead
-  if(p===86) return 'synth_saw';    // fifths
-  if(p===87) return 'synth_bass';   // bass+lead
-  // ── Pads ─────────────────────────────────────────────────────────────
-  if(p===88) return 'pad';          // new age
-  if(p===89) return 'pad';          // warm
-  if(p===90) return 'pad';          // polysynth
-  if(p===91) return 'choir';        // choir pad
-  if(p===92) return 'pad';          // bowed
-  if(p===93) return 'pad_metallic'; // metallic
-  if(p===94) return 'pad';          // halo
-  if(p===95) return 'pad_sweep';    // sweep
-  // ── FX ───────────────────────────────────────────────────────────────
-  if(p===96) return 'fx_crystal';   // rain
-  if(p===97) return 'pad_sweep';    // soundtrack
-  if(p===98) return 'fx_crystal';   // crystal
-  if(p===99) return 'pad';          // atmosphere
-  if(p===100)return 'bell';         // brightness
-  if(p===101)return 'pad';          // goblins
-  if(p===102)return 'fx_crystal';   // echoes
-  if(p===103)return 'synth_saw';    // sci-fi
-  // ── Ethnic ───────────────────────────────────────────────────────────
-  if(p===104||nl.includes('sitar')) return 'guitar';
-  if(p===105||nl.includes('banjo')) return 'guitar';
-  if(p===106||nl.includes('shamisen')) return 'guitar';
-  if(p===107||nl.includes('koto')) return 'guitar';
-  if(p===108||nl.includes('kalimba')) return 'marimba';
-  if(p===109||nl.includes('bagpipe')) return 'reed';
-  if(p===110||nl.includes('fiddle')) return 'strings';
-  if(p===111||nl.includes('shanai')) return 'reed';
-  // ── Percussive ───────────────────────────────────────────────────────
-  if(p===112||nl.includes('tinkle bell')) return 'bell';
-  if(p===113||nl.includes('agogo')) return 'cowbell';
-  if(p===114||nl.includes('steel drums')) return 'marimba';
-  if(p===115||nl.includes('woodblock')) return 'tick';
-  if(p===116||nl.includes('taiko')) return 'drum_kick';
-  if(p===117||nl.includes('melodic tom')) return 'drum_tom';
-  if(p===118||nl.includes('synth drum')) return 'drum_kick';
-  if(p===119||nl.includes('reverse cymbal')) return 'crash';
-  // ── Sound effects ────────────────────────────────────────────────────
-  if(p>=120) return 'tick';
-  return 'piano'; // safe default
+  // Piano / keyboard family (0-7) → piano
+  if(p <= 5)  return 'piano';
+  if(p === 6 || p === 7) return 'piano';       // harpsichord, clavi → piano (similar decay)
+
+  // Chromatic perc (8-15) → bell
+  if(p >= 8  && p <= 15) return 'bell';
+
+  // Organ (16-23) → organ
+  if(p >= 16 && p <= 23) return 'organ';
+
+  // Guitar (24-31) → guitar (all varieties)
+  if(p >= 24 && p <= 31) return 'guitar';
+
+  // Bass (32-39) → bass
+  if(p >= 32 && p <= 39) return 'bass';
+
+  // Strings (40-47)
+  if(p >= 40 && p <= 43) return 'strings';     // violin, viola, cello, contrabass
+  if(p === 44)           return 'strings';     // tremolo strings
+  if(p === 45)           return 'guitar';      // pizzicato → guitar (short pluck)
+  if(p === 46)           return 'guitar';      // harp → guitar (plucked)
+  if(p === 47)           return 'bass';        // timpani → bass (low pitched thump)
+
+  // Ensemble strings (48-51) → strings
+  if(p >= 48 && p <= 51) return 'strings';
+
+  // Choir / Voice (52-55) → choir
+  if(p >= 52 && p <= 55) return 'choir';
+
+  // Brass (56-63)
+  if(p >= 56 && p <= 60) return 'brass';       // trumpet, trombone, tuba, muted, french horn
+  if(p === 61)           return 'brass';       // brass section
+  if(p >= 62 && p <= 63) return 'synth_lead';  // synth brass → synth lead
+
+  // Reed / Woodwind (64-71) → woodwind
+  if(p >= 64 && p <= 71) return 'woodwind';
+
+  // Pipe / Flute (72-79) → flute
+  if(p >= 72 && p <= 79) return 'flute';
+
+  // Synth leads (80-87) → synth_lead
+  if(p >= 80 && p <= 87) return 'synth_lead';
+
+  // Pads (88-95) → pad
+  if(p >= 88 && p <= 95) return 'pad';
+
+  // FX (96-103) → pad (ambient)
+  if(p >= 96 && p <= 103) return 'pad';
+
+  // Ethnic (104-111)
+  if(p === 104) return 'guitar';   // sitar
+  if(p === 105) return 'guitar';   // banjo
+  if(p === 106) return 'guitar';   // shamisen
+  if(p === 107) return 'guitar';   // koto
+  if(p === 108) return 'bell';     // kalimba
+  if(p === 109) return 'woodwind'; // bagpipe
+  if(p === 110) return 'strings';  // fiddle
+  if(p === 111) return 'woodwind'; // shanai
+
+  // Percussive (112-119)
+  if(p === 112) return 'bell';     // tinkle bell
+  if(p === 113) return 'bell';     // agogo
+  if(p === 114) return 'bell';     // steel drums
+  if(p === 115) return 'guitar';   // woodblock (short pluck)
+  if(p === 116) return 'bass';     // taiko drum → bass
+  if(p === 117) return 'bass';     // melodic tom
+  if(p === 118) return 'bass';     // synth drum
+  if(p === 119) return 'pad';      // reverse cymbal → pad wash
+
+  // Sound effects (120-127) → pad
+  return 'pad';
 }
 
 function buildLevelJSON({events, voiceCount, spacing, vol, atk, wave, title, useInstrRecreation=false, pitchProgramMap=null, gmToParams=null, useDupeNotes=false, useExactLength=false, useComplexitySaver=false, creator='MIDI2GRAB', description='', tags=['innovative','showcase'], ambienceSettings=null, reverbDelay=0, reverbDecay=0, vibratoStr=0, vibratoSpd=0, lpfFreq=10000, layout='linear', offsetX=0, offsetY=0, offsetZ=0, blockMaterial=8, blockScale=0.8, blockNeon=true, mirrorLayout=false, addSpawnPlatform=false, addFinishSign=false, soundRangeFactor=1000, maxCheckpointCount=10, showReplays=true, envPunch=0, freqRamp=0, stereoSpread=0, pitchJump=false, pitchJumpStr=0.8, pitchJumpSpd=450, tremolo=false, tremoloSpd=10, waveMotion=false, waveAmp=0.25, waveFreq=1.0, velTriggerSize=false}){
@@ -2214,6 +2223,49 @@ function buildMultiInstrumentJSON({
     xOff:      (i%2===0?1:-1) * Math.floor(i/2) * (stereoSpread||0),
     progs:     g.progs, names: g.names
   }));
+
+  // ── Layer cap: max 5 layers (drums always kept, melodic capped at 4) ─────
+  // When too many preset groups exist, merge smallest melodic layers into
+  // the nearest family (by preset key distance) to save complexity.
+  const MAX_MELODIC_LAYERS = 4;
+  const PRESET_FAMILY = {
+    piano:'keys', organ:'keys', guitar:'keys',
+    bass:'bass', synth_lead:'bass',
+    strings:'strings', choir:'strings', pad:'strings',
+    brass:'wind', woodwind:'wind', flute:'wind', bell:'wind'
+  };
+  function presetDistance(a, b){
+    if(a===b) return 0;
+    if(PRESET_FAMILY[a]===PRESET_FAMILY[b]) return 1;
+    return 2;
+  }
+  const melodicLayers = layerData.filter(l=>!l.isDrum);
+  const drumLayers    = layerData.filter(l=>l.isDrum);
+  if(melodicLayers.length > MAX_MELODIC_LAYERS){
+    // Sort by note count descending — keep top N, merge rest into nearest
+    melodicLayers.sort((a,b)=>b.events.length-a.events.length);
+    const keep   = melodicLayers.slice(0, MAX_MELODIC_LAYERS);
+    const excess = melodicLayers.slice(MAX_MELODIC_LAYERS);
+    for(const ex of excess){
+      // Find keep-layer with closest preset
+      let best=keep[0], bestD=99;
+      for(const k of keep){
+        const d=presetDistance(ex.presetKey, k.presetKey);
+        if(d<bestD){ bestD=d; best=k; }
+      }
+      // Merge events and pitches into best
+      for(const ev of ex.events) best.events.push(ev);
+      for(const m  of ex.pitches) if(!best.pitches.includes(m)) best.pitches.push(m);
+      best.events.sort((a,b)=>a.time-b.time);
+      best.pitches.sort((a,b)=>a-b);
+      for(const pg of ex.progs) best.progs.push(pg);
+      for(const nm of ex.names) best.names.push(nm);
+    }
+    layerData.length = 0;
+    // Re-assign zOffsets after merge
+    keep.forEach((l,i)=>{ l.zOff=-i*Z_SPACING; l.xOff=(i%2===0?1:-1)*Math.floor(i/2)*(stereoSpread||0); layerData.push(l); });
+    drumLayers.forEach((l,i)=>{ l.zOff=-(keep.length+i)*Z_SPACING; l.xOff=0; layerData.push(l); });
+  }
 
   const progToLayer = new Map();
   for(const layer of layerData){
